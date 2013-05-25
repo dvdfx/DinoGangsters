@@ -35,7 +35,7 @@ public class Main
         Vec2 grav = new Vec2(0f,-10f);
         World world = new World(grav);
         
-      initGL(1024, 600);
+        initGL(1024, 600);
     }
     
      
@@ -72,8 +72,8 @@ public class Main
         gluOrtho2D(0.0f,width,0.0f,height);
 	glMatrixMode(GL_MODELVIEW);
         
-        //glDisable(GL_DEPTH_TEST);
-        //glDisable(GL_LIGHTING);
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
     }
     
     public void render()
@@ -88,14 +88,13 @@ public class Main
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(800,60);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(800,650);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(60,650);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(900,60);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(900,550);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(60,550);
         glEnd();
     }
     
-    public void run()
-            
+    public void run()            
     {
       while(!Display.isCloseRequested())
       {
@@ -110,6 +109,6 @@ public class Main
     
     public void update()
     {
-        world.step(1f/5f, 1,1);
+        //world.step(1f/5f, 1,1);
     }
 }
