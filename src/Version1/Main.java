@@ -110,6 +110,6 @@ public class Main
     
     public void update()
     {
-        _world.step(1f/5f, 1,1);
+        world.step(1f/5f, 1,1);
     }
 }
