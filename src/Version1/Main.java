@@ -28,8 +28,6 @@ public class Main
     
     public void create() throws LWJGLException
     {
-      Display.create();
-      
       initGL(1024, 600);
     }
     
