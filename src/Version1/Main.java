@@ -18,6 +18,7 @@ public class Main
         catch(Exception ex)
         {
             //LOGGER.log(Level.SEVERE,ex.toString(),ex);
+            //
         }
     }
     
