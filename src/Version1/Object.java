@@ -17,13 +17,14 @@ public class Object
     private Texture texture;
     private String imgLoc;
     
-    public Object(String iLoc)
+    public Object()
     {
-        imgLoc = iLoc;
+        ;
     }
     
-    public void init() throws IOException
+    public void init(String iLoc) throws IOException
     {
+        imgLoc = iLoc;
         texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));
     }
 }
