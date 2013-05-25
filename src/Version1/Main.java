@@ -15,6 +15,10 @@ import org.jbox2d.common.Vec2;
 public class Main
 {
     private World world;
+    float square2x1 = 50;
+    float square2y1 = 50;
+    float square2x2 = 100;
+    float square2y2  = 100;
     
     public static void main(String[] args)
     {
@@ -39,11 +43,14 @@ public class Main
         
         initGL(1024, 600);
         
+        Mouse.setGrabbed(false);
+        Mouse.create();        
     }
     
      
     public void destroy()
     {
+        Mouse.destroy();
         Display.destroy();
     }
     
@@ -85,9 +92,7 @@ public class Main
         glLoadIdentity();
  
         //Map background
-        //glTranslatef(0,0,0.0f);
         glRotatef(0,0.0f,0.0f,1.0f);
-        //glTranslatef(-(100 >> 1),-(100 >> 1),0.0f);
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
@@ -97,10 +102,10 @@ public class Main
         glEnd();
         glColor3f(0.0f,0.0f,0.5f);
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(200,200);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(300,200);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(300,300);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(200,300);
+            glTexCoord2f(0.0f,0.0f); glVertex2f(square2x1,square2y1);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(square2x2,square2y1);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(square2x2,square2y2);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(square2x1,square2y2);
         glEnd();
     }
     
@@ -108,8 +113,22 @@ public class Main
     {
         float XPos = Mouse.getX();
         float YPos = Mouse.getY();
+             
+    }
+    
+    public void processKeyboard()
+    {
+        if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+        {
+            square2x1 += 0.5;
+            square2x2 += 0.5;
+        }
         
-        
+        if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+        {
+            square2x1 -= 0.5;
+            square2x2 -= 0.5;
+        }
     }
     
     public void run()            
@@ -118,6 +137,7 @@ public class Main
       {
           if(Display.isVisible())
           {
+              processKeyboard();
               processMouse();
               update();
               render();
