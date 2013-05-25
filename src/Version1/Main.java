@@ -88,9 +88,9 @@ public class Main
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(900,60);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(900,550);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(60,550);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(1060,60);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(1060,635);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(60,635);
         glEnd();
     }
     
