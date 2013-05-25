@@ -8,6 +8,7 @@ package Version1;
  *
  * @author Ramen
  */
-public class Object {
-    
+public class Object
+{
+    private String imgLoc;
 }
