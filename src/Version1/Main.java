@@ -1,5 +1,6 @@
 
 package Version1;
+import java.util.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -15,6 +16,7 @@ import org.jbox2d.common.Vec2;
 public class Main
 {
     private World world;
+    private ArrayList<Object> wObjs = new ArrayList<Object>();
     
     public static void main(String[] args)
     {

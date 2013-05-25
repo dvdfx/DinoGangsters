@@ -22,7 +22,7 @@ public class Object
         ;
     }
     
-    public void init(String iLoc) throws IOException
+    public void init(String iLoc, int w, int h) throws IOException
     {
         imgLoc = iLoc;
         texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));
