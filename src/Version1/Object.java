@@ -18,7 +18,7 @@ public class Object
 {
     private Texture texture;
     private String imgLoc;
-    private float xPos, yPos, width, height;
+    public float xPos, yPos, width, height;
     
     public Object()
     {

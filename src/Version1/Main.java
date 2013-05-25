@@ -11,7 +11,12 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.*;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.collision.shapes.*;
 
 public class Main
 {
@@ -20,14 +25,12 @@ public class Main
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
-<<<<<<< HEAD
     static Vec2 grav = new Vec2(0f,-10f);
-    private ArrayList<Object> wObjs = new ArrayList<Object>();
-
-=======
+    boolean sleep = false;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
->>>>>>> 30b8bfa79c25e6c5ef60d4da2129b5645cf62ffc
+    BodyDef player;
+    Body p1;
     
     public static void main(String[] args)
     {
@@ -35,7 +38,6 @@ public class Main
         try
         {
           main = new Main();
-          World world = new World(grav);
           main.create();
           main.run();
         }
@@ -48,7 +50,7 @@ public class Main
     
     public void create() throws LWJGLException
     {
-        //World world = new World(grav);
+        World world = new World(grav);   
         
         initGL(1024, 600);
         
@@ -62,6 +64,20 @@ public class Main
         {
             System.err.println(e);
         }
+        
+        BodyDef player = new BodyDef();
+        player.position.set(testObj.xPos, testObj.yPos);
+        player.type = BodyType.DYNAMIC; 
+        
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(5, 2,new Vec2(0,0),0);
+        
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.density =1f;
+        
+        Body p1 = world.createBody(player);
+        p1.createFixture(fd);
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -134,20 +150,21 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
-            square2x1 += 0.5;
-            square2x2 += 0.5;
+            testObj.xPos += 0.5;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
         {
-            square2x1 -= 0.5;
-            square2x2 -= 0.5;
+            testObj.xPos -= 0.5;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
         {
-            square2y1 += 1;
-            square2y2 += 1;
+            testObj.yPos += 1;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+        {
+            testObj.yPos -= 1;
         }
     }
     
@@ -163,12 +180,17 @@ public class Main
               render();
           }
           Display.update();
+          physUpdate();
       }
     }
     
     public void update()
     {
-        world.step(1f/5f, 1,1);
-
+    }
+    
+    public void physUpdate()
+    {
+       //world.step(1f/60f, 6,2);
+       //p1.getPosition();  
     }
 }
