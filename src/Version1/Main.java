@@ -26,16 +26,9 @@ public class Main
     float square2x2 = 100;
     float square2y2  = 100;
     static Vec2 grav = new Vec2(0f,-10f);
-<<<<<<< HEAD
     boolean sleep = false;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
-    BodyDef player;
-    Body p1;
-=======
-    private ArrayList<Object> wObjs = new ArrayList<Object>();
-    private Object testObj;
->>>>>>> 75d300ba2bef62c65a9391321c0e8c94fedd98a8
     
     public static void main(String[] args)
     {
@@ -176,16 +169,13 @@ public class Main
     
     public void update()
     {
-<<<<<<< HEAD
+        ;
     }
     
     public void physUpdate()
     {
        //world.step(1f/60f, 6,2);
-       //p1.getPosition();  
-=======
+       //p1.getPosition();
         //world.step(1f/5f, 1,1);
-
->>>>>>> 75d300ba2bef62c65a9391321c0e8c94fedd98a8
     }
 }
