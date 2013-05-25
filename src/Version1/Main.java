@@ -1,5 +1,7 @@
 
 package Version1;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -7,6 +9,8 @@ import org.lwjgl.opengl.DisplayMode;
 
 public class Main
 {
+    public static final int D_HEIGHT = 650;
+    public static final int D_WIDTH = 900;
 
     public static void main(String[] args)
     {
@@ -26,21 +30,68 @@ public class Main
     
     public void create() throws LWJGLException
     {
-      Display.setDisplayMode(new DisplayMode(100,100));
-      Display.setTitle("DinoGangsters");
+      Display.setDisplayMode(new DisplayMode(D_WIDTH,D_HEIGHT));
       Display.create();
+      
+      initGL();
+      resizeGL();
     }
     
+     
     public void destroy()
     {
         Display.destroy();
+    }
+    
+    public void initGL()
+    {
+        glClearColor(0.0f,0.0f,0.0f,0.0f);
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+    }
+    
+    public void resizeGL()
+    {
+        glViewport(0,0,D_WIDTH,D_HEIGHT);
+        
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0.0f,D_WIDTH,0.0f,D_HEIGHT);
+        glPushMatrix();
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glPushMatrix();
+    }
+    
+    public void render()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+ 
+        //Map background
+        glTranslatef(0,0,0.0f);
+        glRotatef(0,0.0f,0.0f,1.0f);
+        glTranslatef(-(100 >> 1),-(100 >> 1),0.0f);
+        glColor3f(0.0f,0.5f,0.5f);
+        glBegin(GL_QUADS);
+            glTexCoord2f(0.0f,0.0f); glVertex2f(0.0f,0.0f);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(100,0.0f);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(100,100);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(0.0f,100);
+        glEnd();
     }
     
     public void run()
     {
       while(!Display.isCloseRequested())
       {
-       Display.update();   
+          if(Display.isVisible())
+          {
+              update();
+              render();
+          }
+          Display.update();
       }
     }
     
