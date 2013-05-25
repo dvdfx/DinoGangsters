@@ -20,6 +20,7 @@ public class Main
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
+    static Vec2 grav = new Vec2(0f,-10f);
     private ArrayList<Object> wObjs = new ArrayList<Object>();
 
     
@@ -29,6 +30,7 @@ public class Main
         try
         {
           main = new Main();
+          World world = new World(grav);
           main.create();
           main.run();
         }
@@ -41,8 +43,7 @@ public class Main
     
     public void create() throws LWJGLException
     {
-        Vec2 grav = new Vec2(0f,-10f);
-        World world = new World(grav);
+        //World world = new World(grav);
         
         initGL(1024, 600);
         
@@ -132,6 +133,12 @@ public class Main
             square2x1 -= 0.5;
             square2x2 -= 0.5;
         }
+        
+        if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+        {
+            square2y1 += 1;
+            square2y2 += 1;
+        }
     }
     
     public void run()            
@@ -151,6 +158,7 @@ public class Main
     
     public void update()
     {
-        //world.step(1f/5f, 1,1);
+        world.step(1f/5f, 1,1);
+
     }
 }
