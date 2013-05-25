@@ -6,6 +6,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import org.jbox2d.dynamics.World;
 import org.jbox2d.common.Vec2;
@@ -36,6 +38,7 @@ public class Main
         World world = new World(grav);
         
         initGL(1024, 600);
+        
     }
     
      
@@ -82,16 +85,31 @@ public class Main
         glLoadIdentity();
  
         //Map background
-        glTranslatef(0,0,0.0f);
+        //glTranslatef(0,0,0.0f);
         glRotatef(0,0.0f,0.0f,1.0f);
-        glTranslatef(-(100 >> 1),-(100 >> 1),0.0f);
+        //glTranslatef(-(100 >> 1),-(100 >> 1),0.0f);
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(1060,60);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(1060,635);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(60,635);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(960,60);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(960,500);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(60,500);
         glEnd();
+        glColor3f(0.0f,0.0f,0.5f);
+        glBegin(GL_QUADS);
+            glTexCoord2f(0.0f,0.0f); glVertex2f(200,200);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(300,200);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(300,300);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(200,300);
+        glEnd();
+    }
+    
+    public void processMouse()
+    {
+        float XPos = Mouse.getX();
+        float YPos = Mouse.getY();
+        
+        
     }
     
     public void run()            
@@ -100,6 +118,7 @@ public class Main
       {
           if(Display.isVisible())
           {
+              processMouse();
               update();
               render();
           }
