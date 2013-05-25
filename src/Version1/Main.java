@@ -1,5 +1,6 @@
 
 package Version1;
+import java.io.IOException;
 import java.util.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
@@ -21,6 +22,7 @@ public class Main
     float square2x2 = 100;
     float square2y2  = 100;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
+    private Object testObj;
     
     public static void main(String[] args)
     {
@@ -42,6 +44,17 @@ public class Main
     {
         Vec2 grav = new Vec2(0f,-10f);
         World world = new World(grav);
+        
+        //wObjs.add(new Object());
+        testObj = new Object();
+        try
+        {
+            testObj.init("resource/rex.png", 30, 50);
+        }
+        catch (IOException e)
+        {
+            ;
+        }
         
         initGL(1024, 600);
         
@@ -109,6 +122,8 @@ public class Main
             glTexCoord2f(1.0f,1.0f); glVertex2f(square2x2,square2y2);
             glTexCoord2f(0.0f,1.0f); glVertex2f(square2x1,square2y2);
         glEnd();
+        
+        testObj.render();
     }
     
     public void processMouse()
