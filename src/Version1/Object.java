@@ -14,8 +14,7 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Object
 {
-    Texture texture;
-    
+    private Texture texture;
     private String imgLoc;
     
     public void init() throws IOException

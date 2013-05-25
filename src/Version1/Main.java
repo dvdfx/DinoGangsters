@@ -5,13 +5,11 @@ import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 
 public class Main
 {
-    public static final int D_HEIGHT = 650;
-    public static final int D_WIDTH = 900;
-
     public static void main(String[] args)
     {
         Main main = null;
@@ -30,11 +28,9 @@ public class Main
     
     public void create() throws LWJGLException
     {
-      Display.setDisplayMode(new DisplayMode(D_WIDTH,D_HEIGHT));
       Display.create();
       
-      initGL();
-      resizeGL();
+      initGL(1024, 600);
     }
     
      
@@ -43,25 +39,33 @@ public class Main
         Display.destroy();
     }
     
-    public void initGL()
+    public void initGL(int width, int height)
     {
+        try
+        {
+            Display.setDisplayMode(new DisplayMode(width,height));
+            Display.create();
+            Display.setVSyncEnabled(true);
+	}
+        catch (LWJGLException e)
+        {
+            e.printStackTrace();
+            System.exit(0);
+	}
+ 
+	GL11.glEnable(GL11.GL_TEXTURE_2D);
         glClearColor(0.0f,0.0f,0.0f,0.0f);
+        
+        GL11.glViewport(0,0,width,height);
+	GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        
+        glMatrixMode(GL11.GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0.0f,width,0.0f,height);
+        glPushMatrix();
+        
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
-    }
-    
-    public void resizeGL()
-    {
-        glViewport(0,0,D_WIDTH,D_HEIGHT);
-        
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluOrtho2D(0.0f,D_WIDTH,0.0f,D_HEIGHT);
-        glPushMatrix();
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glPushMatrix();
     }
     
     public void render()
