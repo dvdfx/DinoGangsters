@@ -51,19 +51,22 @@ public class Main
             System.exit(0);
 	}
  
-	GL11.glEnable(GL11.GL_TEXTURE_2D);
+	glEnable(GL11.GL_TEXTURE_2D);
         glClearColor(0.0f,0.0f,0.0f,0.0f);
         
-        GL11.glViewport(0,0,width,height);
-	GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        glEnable(GL11.GL_BLEND);
+        glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         
-        glMatrixMode(GL11.GL_PROJECTION);
+        glViewport(0,0,width,height);
+	glMatrixMode(GL_MODELVIEW);
+        
+        glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluOrtho2D(0.0f,width,0.0f,height);
-        glPushMatrix();
+	glMatrixMode(GL_MODELVIEW);
         
-        glDisable(GL_DEPTH_TEST);
-        glDisable(GL_LIGHTING);
+        //glDisable(GL_DEPTH_TEST);
+        //glDisable(GL_LIGHTING);
     }
     
     public void render()
