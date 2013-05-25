@@ -7,9 +7,13 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import org.jbox2d.dynamics.World;
+import org.jbox2d.common.Vec2;
 
 public class Main
 {
+    private World world;
+    
     public static void main(String[] args)
     {
         Main main = null;
@@ -28,6 +32,9 @@ public class Main
     
     public void create() throws LWJGLException
     {
+        Vec2 grav = new Vec2(0f,-10f);
+        World world = new World(grav);
+        
       initGL(1024, 600);
     }
     
@@ -100,6 +107,6 @@ public class Main
     
     public void update()
     {
-        
+        _world.step(1f/5f, 1,1);
     }
 }
