@@ -61,7 +61,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/ammo.png", 0.0f, 0.0f, 200.0f, 200.0f);
+        testObj.init("resource/ammo.png", 0.0f, 0.0f, 64.0f, 64.0f);
         
         BodyDef player = new BodyDef();
         player.position.set(testObj.xPos, testObj.yPos);
@@ -113,7 +113,8 @@ public class Main
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluOrtho2D(0.0f,width,0.0f,height);
+        glOrtho(0, width, 0, height, 1, -1);
+        //gluOrtho2D(0.0f,width,0.0f,height);
 	glMatrixMode(GL_MODELVIEW);
         
         glDisable(GL_DEPTH_TEST);
@@ -124,15 +125,6 @@ public class Main
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
- 
-        //Map background
-        glColor3f(1.0f,1.0f,1.0f);
-        glBegin(GL_QUADS);
-            glVertex2f(60,60);
-            glVertex2f(960,60);
-            glVertex2f(960,500);
-            glVertex2f(60,500);
-        glEnd();
         
         testObj.render();
     }
