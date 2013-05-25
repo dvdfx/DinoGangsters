@@ -20,9 +20,14 @@ public class Main
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
+<<<<<<< HEAD
     static Vec2 grav = new Vec2(0f,-10f);
     private ArrayList<Object> wObjs = new ArrayList<Object>();
 
+=======
+    private ArrayList<Object> wObjs = new ArrayList<Object>();
+    private Object testObj;
+>>>>>>> 30b8bfa79c25e6c5ef60d4da2129b5645cf62ffc
     
     public static void main(String[] args)
     {
@@ -46,6 +51,17 @@ public class Main
         //World world = new World(grav);
         
         initGL(1024, 600);
+        
+        //wObjs.add(new Object());
+        testObj = new Object();
+        try
+        {
+            testObj.init("resource/rex.png", 0.0f, 0.0f, 60.0f, 100.0f);
+        }
+        catch (Exception e)
+        {
+            System.err.println(e);
+        }
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -96,7 +112,6 @@ public class Main
         glLoadIdentity();
  
         //Map background
-        glRotatef(0,0.0f,0.0f,1.0f);
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
@@ -104,13 +119,8 @@ public class Main
             glTexCoord2f(1.0f,1.0f); glVertex2f(960,500);
             glTexCoord2f(0.0f,1.0f); glVertex2f(60,500);
         glEnd();
-        glColor3f(0.0f,0.0f,0.5f);
-        glBegin(GL_QUADS);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(square2x1,square2y1);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(square2x2,square2y1);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(square2x2,square2y2);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(square2x1,square2y2);
-        glEnd();
+        
+        testObj.render();
     }
     
     public void processMouse()
