@@ -17,6 +17,11 @@ public class Object
     private Texture texture;
     private String imgLoc;
     
+    public Object(String iLoc)
+    {
+        imgLoc = iLoc;
+    }
+    
     public void init() throws IOException
     {
         texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));
