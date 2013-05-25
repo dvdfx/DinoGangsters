@@ -25,7 +25,7 @@ public class Object
         ;
     }
     
-    public void init(String iLoc, float x, float y, float w, float h) throws IOException
+    public void init(String iLoc, float x, float y, float w, float h)
     {
         xPos = x;
         yPos = y;
@@ -33,13 +33,23 @@ public class Object
         height = h;
         imgLoc = iLoc;
         System.out.println(imgLoc);
-        texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));
+        try
+        {
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));
+        }
+        catch (IOException e)
+        {
+            texture = null;
+        }
     }
     
     public void render()
     {
         Color.white.bind();
-        texture.bind();
+        if(texture != null)
+        {
+            texture.bind();
+        }
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f, 1.0f); glVertex2f(xPos, yPos);
             glTexCoord2f(1.0f,1.0f); glVertex2f(xPos + width, yPos);

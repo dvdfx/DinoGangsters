@@ -26,11 +26,16 @@ public class Main
     float square2x2 = 100;
     float square2y2  = 100;
     static Vec2 grav = new Vec2(0f,-10f);
+<<<<<<< HEAD
     boolean sleep = false;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
     BodyDef player;
     Body p1;
+=======
+    private ArrayList<Object> wObjs = new ArrayList<Object>();
+    private Object testObj;
+>>>>>>> 75d300ba2bef62c65a9391321c0e8c94fedd98a8
     
     public static void main(String[] args)
     {
@@ -56,14 +61,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        try
-        {
-            testObj.init("resource/rex.png", 0.0f, 0.0f, 60.0f, 100.0f);
-        }
-        catch (Exception e)
-        {
-            System.err.println(e);
-        }
+        testObj.init("resource/ammo.png", 0.0f, 0.0f, 200.0f, 200.0f);
         
         BodyDef player = new BodyDef();
         player.position.set(testObj.xPos, testObj.yPos);
@@ -124,16 +122,16 @@ public class Main
     
     public void render()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
  
         //Map background
-        glColor3f(0.0f,0.5f,0.5f);
+        glColor3f(1.0f,1.0f,1.0f);
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(960,60);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(960,500);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(60,500);
+            glVertex2f(60,60);
+            glVertex2f(960,60);
+            glVertex2f(960,500);
+            glVertex2f(60,500);
         glEnd();
         
         testObj.render();
@@ -186,11 +184,16 @@ public class Main
     
     public void update()
     {
+<<<<<<< HEAD
     }
     
     public void physUpdate()
     {
        //world.step(1f/60f, 6,2);
        //p1.getPosition();  
+=======
+        //world.step(1f/5f, 1,1);
+
+>>>>>>> 75d300ba2bef62c65a9391321c0e8c94fedd98a8
     }
 }
