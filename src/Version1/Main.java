@@ -16,14 +16,11 @@ import org.jbox2d.common.Vec2;
 public class Main
 {
     private World world;
-<<<<<<< HEAD
     float square2x1 = 50;
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
-=======
     private ArrayList<Object> wObjs = new ArrayList<Object>();
->>>>>>> 5ab4e9721abe6389b4ae5e97f3a1c612191727d6
     
     public static void main(String[] args)
     {
