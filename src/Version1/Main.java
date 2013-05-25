@@ -10,22 +10,13 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.*;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.collision.shapes.*;
 
 public class Main
 {
-    private World world;
     float square2x1 = 50;
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
-    static Vec2 grav = new Vec2(0f,-10f);
     boolean sleep = false;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
@@ -48,27 +39,13 @@ public class Main
     
     public void create() throws LWJGLException
     {
-        World world = new World(grav);   
         
         initGL(1024, 600);
         
         //wObjs.add(new Object());
         testObj = new Object();
         testObj.init("resource/ammo.png", 0.0f, 0.0f, 64.0f, 64.0f);
-        
-        BodyDef player = new BodyDef();
-        player.position.set(testObj.xPos, testObj.yPos);
-        player.type = BodyType.DYNAMIC; 
-        
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(5, 2,new Vec2(0,0),0);
-        
-        FixtureDef fd = new FixtureDef();
-        fd.shape = shape;
-        fd.density =1f;
-        
-        Body p1 = world.createBody(player);
-        p1.createFixture(fd);
+
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -145,7 +122,7 @@ public class Main
         {
             testObj.yPos += 1;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+        if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
         {
             testObj.yPos -= 1;
         }
@@ -163,7 +140,6 @@ public class Main
               render();
           }
           Display.update();
-          physUpdate();
       }
     }
     
@@ -172,10 +148,4 @@ public class Main
         ;
     }
     
-    public void physUpdate()
-    {
-       //world.step(1f/60f, 6,2);
-       //p1.getPosition();
-        //world.step(1f/5f, 1,1);
-    }
 }
