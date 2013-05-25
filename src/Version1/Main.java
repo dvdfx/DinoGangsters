@@ -1,6 +1,5 @@
 
 package Version1;
-import java.io.IOException;
 import java.util.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
@@ -45,18 +44,18 @@ public class Main
         Vec2 grav = new Vec2(0f,-10f);
         World world = new World(grav);
         
+        initGL(1024, 600);
+        
         //wObjs.add(new Object());
         testObj = new Object();
         try
         {
-            testObj.init("resource/rex.png", 30, 50);
+            testObj.init("resource/rex.png", 0.0f, 0.0f, 60.0f, 100.0f);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
-            ;
+            System.err.println(e);
         }
-        
-        initGL(1024, 600);
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -107,20 +106,12 @@ public class Main
         glLoadIdentity();
  
         //Map background
-        glRotatef(0,0.0f,0.0f,1.0f);
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
             glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
             glTexCoord2f(1.0f,0.0f); glVertex2f(960,60);
             glTexCoord2f(1.0f,1.0f); glVertex2f(960,500);
             glTexCoord2f(0.0f,1.0f); glVertex2f(60,500);
-        glEnd();
-        glColor3f(0.0f,0.0f,0.5f);
-        glBegin(GL_QUADS);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(square2x1,square2y1);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(square2x2,square2y1);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(square2x2,square2y2);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(square2x1,square2y2);
         glEnd();
         
         testObj.render();
