@@ -75,14 +75,15 @@ public class Main
         glTranslatef(-(100 >> 1),-(100 >> 1),0.0f);
         glColor3f(0.0f,0.5f,0.5f);
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(0.0f,0.0f);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(100,0.0f);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(100,100);
-            glTexCoord2f(0.0f,1.0f); glVertex2f(0.0f,100);
+            glTexCoord2f(0.0f,0.0f); glVertex2f(60,60);
+            glTexCoord2f(1.0f,0.0f); glVertex2f(800,60);
+            glTexCoord2f(1.0f,1.0f); glVertex2f(800,650);
+            glTexCoord2f(0.0f,1.0f); glVertex2f(60,650);
         glEnd();
     }
     
     public void run()
+            
     {
       while(!Display.isCloseRequested())
       {
