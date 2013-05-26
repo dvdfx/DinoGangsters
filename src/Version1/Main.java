@@ -82,7 +82,7 @@ public class Main
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
                     
-        wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu.wav"));
+        wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
