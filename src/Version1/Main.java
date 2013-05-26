@@ -171,7 +171,6 @@ public class Main
         {
             bkgd.render();
             GUIObj.render();
-            //player.changeSprite(player.getSpriteX() + 32, 0);
             for(int i = 0; i < wObjs.size(); i++)
             {
                 if(wObjs.get(i).type.equals("Police"))
@@ -422,7 +421,7 @@ public class Main
         {
             if(wObjs.get(i).type.equals("Police"))
             {
-                if(((Police)wObjs.get(i)).shotLimit < 50)
+                if(((Police)wObjs.get(i)).shotLimit < 3)
                 {
                     wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false, "Police"));
                     ((Police)wObjs.get(i)).shotLimit++;                                           
@@ -531,6 +530,7 @@ public class Main
                     }
                     ((Police)wObjs.get(i)).width =  64;
                     ((Police)wObjs.get(i)).height = 64;
+                    ((Police)wObjs.get(i)).yPos += 10;  //dont really like it, but works
                     ((Police)wObjs.get(i)).changeSprite(32, 64);
                     ((Police)wObjs.get(i)).deathTimer += 10;
                 }
@@ -546,7 +546,7 @@ public class Main
         if(chance == 75)
         {
             int randY = randomGenerator.nextInt(120);
-            wObjs.add(new Police(980, 350+randY));
+            wObjs.add(new Police(1000, 350+randY));
         }
     }
     
