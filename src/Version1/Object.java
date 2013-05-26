@@ -21,7 +21,7 @@ public class Object
     public Texture texture; //should be private?
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
-    private float[] velocity;
+    protected float[] velocity;
     public boolean flip = false;
     
     public Object(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)

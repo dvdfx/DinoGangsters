@@ -257,12 +257,22 @@ public class Main
     public void update(int delta)
     {
         constrainPlayer();
-        bulletMove();
         addPoPo();
+        updateLocations();
         policeMove();
         bulletCol();
         playDeath();
         poShootYou();
+    }
+    
+    public void updateLocations()
+    {
+        ListIterator wObjIter = wObjs.listIterator();
+        while(wObjIter.hasNext())
+        {
+            Object obj = (Object) wObjIter.next();
+            obj.moveUpdate();
+        }
     }
     
     public void startClicked()
@@ -330,19 +340,6 @@ public class Main
         if(player.yPos < 350)
         {
             player.yPos = 350;
-        }
-    }
-    public void bulletMove()
-    {
-        for(int i = 0; i < wObjs.size(); i++)
-        {
-            if(wObjs.get(i).type.equals("Bullet"))
-            {
-                wObjs.get(i).xPos += 8;
-            }
-            //if(wObjs.get(i).type.equals("Bullet"))
-            //{
-            //}
         }
     }
     

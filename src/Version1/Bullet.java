@@ -19,5 +19,13 @@ public class Bullet extends Object
     {
         super("resource/bullet.png", x, y, 8, 8, 0, 0, 4, 4);
         type = "Bullet";
+        if(right)
+        {
+            velocity[0] = 8;
+        }
+        else
+        {
+            velocity[0] = -8;
+        }
     }
 }
