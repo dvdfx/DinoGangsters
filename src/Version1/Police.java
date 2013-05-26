@@ -14,7 +14,9 @@ import org.newdawn.slick.util.ResourceLoader;;
 public class Police extends Object
 {     
     int health = 100;
+    int deathTimer = 100;
     int shotLimit = 3;
+    boolean flagDamage = false;
     
     public Police()
     {

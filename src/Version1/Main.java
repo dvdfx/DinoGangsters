@@ -143,10 +143,22 @@ public class Main
         else
         {
             bkgd.render();
-            testObj.changeSprite(32, 0);
+            testObj.changeSprite(0, 0);
             testObj.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
+                if(wObjs.get(i).type.equals("Police"))
+                {
+                    if(((Police)wObjs.get(i)).flagDamage)
+                    {
+                        wObjs.get(i).changeSprite(0, 64);
+                        ((Police)wObjs.get(i)).flagDamage = false;
+                    }
+                    else
+                    {
+                        wObjs.get(i).changeSprite(0, 0);
+                    }
+                }
                 wObjs.get(i).render();
             }
         
@@ -302,7 +314,7 @@ public class Main
             int randY = randomGenerator.nextInt(120);
             
             Police p = new Police();
-            p.init(testObj.xPos+50+randX, 350+randY, 64, 128);
+            p.init(testObj.xPos+80+randX, 350+randY, 64, 128);
             wObjs.add(p);
         }
     }
@@ -329,6 +341,7 @@ public class Main
                             if(o1.type.equals("Police"))
                             {
                                 ((Police)o1).takeDamage();
+                                ((Police)o1).flagDamage = true;
                             }
                             else
                             {
@@ -338,6 +351,7 @@ public class Main
                             if(o2.type.equals("Police"))
                             {
                                 ((Police)o2).takeDamage();
+                                ((Police)o2).flagDamage =true;
                             }
                             else
                             {
