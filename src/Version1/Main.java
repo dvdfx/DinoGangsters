@@ -76,7 +76,7 @@ public class Main
         testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         
         bkgd = new Object();
-        bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 40.0f, 380.0f, 200.0f);
+        bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 380.0f, 256.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -330,13 +330,16 @@ public class Main
                 Object o2 = (Object) secondIter.next();
                 if(o1 != o2)
                 {
-                    if((o1.type.equals("Bullet") || o2.type.equals("Bullet")) && (o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
+                    if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
                     {
-                        firstIter.remove();
-                        secondIter.remove();
+                        if(o1.type.equals("Bullet") ^ o2.type.equals("Bullet"))
+                        {
+                            firstIter.remove();
+                            secondIter.remove();
                     
-                        score++;
-                        break;
+                            score++;
+                            break;
+                        }
                     }
                 }
             }
