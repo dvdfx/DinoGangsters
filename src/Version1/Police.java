@@ -33,7 +33,7 @@ public class Police extends Object
         tOffH = 64;
         try
         {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resource/police.png"));
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resource/popoSprite.png"));
         }
         catch (IOException e)
         {
