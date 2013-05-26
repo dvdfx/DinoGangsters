@@ -45,6 +45,8 @@ public class Main
     private long lastPressed = 0;
     private long lastSwitch =0;
     
+    private Random rng = new Random();
+    
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
     
@@ -522,6 +524,10 @@ public class Main
                     if(((Police)wObjs.get(i)).deathTimer == 0)
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
+                        if(rng.nextInt(10) < 3)
+                        {
+                            wObjs.add(new Loot(wObjs.get(i).xPos, wObjs.get(i).yPos + wObjs.get(i).height, "Ammo"));
+                        }
                     }
                     ((Police)wObjs.get(i)).width =  64;
                     ((Police)wObjs.get(i)).height = 64;
