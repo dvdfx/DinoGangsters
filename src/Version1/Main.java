@@ -140,7 +140,7 @@ public class Main
         else
         {
             bkgd.render();
-            testObj.changeSprite(2, 2);
+            testObj.changeSprite(32, 0);
             testObj.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
