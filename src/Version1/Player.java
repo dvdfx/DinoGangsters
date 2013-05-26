@@ -14,6 +14,7 @@ public class Player extends Object
     int shotLimit = 12;
     boolean flagDamage = false;
     private boolean isShooting = false;
+    private int totalAmmo = 36;
     private int burstRate = 3;
     private int burstShots = 0;
     private int shotsFired = 0;
@@ -82,5 +83,13 @@ public class Player extends Object
     public void takeDamage()
     {
         this.health -= 5;
+    }
+    public int getTotalAmmo()
+    {
+        return totalAmmo;
+    }
+    public void setTotalAmmo(int s)
+    {
+        totalAmmo += s;
     }
 }

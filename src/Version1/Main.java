@@ -281,9 +281,10 @@ public class Main
         
         if(Keyboard.isKeyDown(Keyboard.KEY_R))
         {
-            if(reloadNeeded)
+            if(reloadNeeded && player.getTotalAmmo() > 0)
             {
                 player.setShotsFired(0);
+                player.setTotalAmmo(-12);
                 reloadNeeded = false;
             }
         }
@@ -659,7 +660,7 @@ public class Main
         font.drawString(20, 5, "Score: "+score, Color.green);
         font.drawString(280, 5, "Health: "+player.health, Color.green);
         font.drawString(540, 5, "Weapon: Tommy", Color.green);
-        font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired()), Color.green);
+        font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired())+"/"+player.getTotalAmmo(), Color.green);
     }
     
     public int getDelta()
