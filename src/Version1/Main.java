@@ -2,6 +2,7 @@
 package Version1;
 import java.util.*;
 import java.util.Random;
+import java.awt.Font;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -10,7 +11,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class Main
 {
@@ -19,6 +22,8 @@ public class Main
     float square2x2 = 100;
     float square2y2  = 100;
     boolean shoot = false;
+    int score =0;
+    TrueTypeFont font;
     private ArrayList<Object> bulletObjs = new ArrayList<Object>();
     private ArrayList<Object> policeObjs = new ArrayList<Object>();
     private Object testObj;
@@ -47,6 +52,9 @@ public class Main
         //wObjs.add(new Object());
         testObj = new Object();
         testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        
+        Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+        font = new TrueTypeFont(awtFont, false);
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -84,7 +92,7 @@ public class Main
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(0, width, 0, height, 1, -1);
+        glOrtho(0, width, height, 0, 1, -1);
         //gluOrtho2D(0.0f,width,0.0f,height);
 	glMatrixMode(GL_MODELVIEW);
         
@@ -106,6 +114,8 @@ public class Main
         {
             policeObjs.get(j).render();
         }
+        
+        displayScore();
     }
     
     public void processMouse()
@@ -140,7 +150,7 @@ public class Main
               shoot = true;
               if(bulletObjs.size() > 0)
               {
-                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 200))
+                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 100))
                 {
                   Object shot = new Object();
                   shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4, 0, 0, 4, 4);
@@ -231,9 +241,15 @@ public class Main
                 if((bulletObjs.get(i).xPos == policeObjs.get(j).xPos)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+64))
                 {
                     policeObjs.get(j).xPos = 2000;
+                    score++;
                 }
             }
         }
+    }
+    
+    public void displayScore()
+    {
+        font.drawString(200, 200, "Score: "+score, Color.green);
     }
     
 }
