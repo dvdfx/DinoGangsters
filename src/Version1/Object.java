@@ -81,4 +81,9 @@ public class Object
     {
         return tOffY;
     }
+    
+    public Texture getTexture()
+    {
+        return texture;
+    }
 }

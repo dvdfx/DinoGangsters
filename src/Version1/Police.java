@@ -1,5 +1,12 @@
 package Version1;
 
+import java.io.IOException;
+import java.io.*;
+import static org.lwjgl.opengl.GL11.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.*;
+import org.newdawn.slick.util.ResourceLoader;;
+
 /**
  *
  * @author David Fox
@@ -7,9 +14,33 @@ package Version1;
 public class Police extends Object
 {     
     int health = 100;
+    int shotLimit = 3;
+    private Texture texture = super.getTexture();
+    
+    public void init(float x, float y, float w, float h)//, float tx, float ty, float tw, float th)
+    {
+        xPos = x;
+        yPos = y;
+        width = w;
+        height = h;
+        tOffX = 0;
+        tOffY = 0;
+        tOffW = 32;
+        tOffH = 64;
+        try
+        {
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resource/police.png"));
+        }
+        catch (IOException e)
+        {
+            texture = null;
+        }
+        texW = texture.getTextureWidth();
+        texH = texture.getTextureHeight();
+    }
     
     public void takeDamage()
     {
-        this.health -= 10;
+        this.health -= 20;
     }
 }
