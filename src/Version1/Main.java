@@ -30,7 +30,7 @@ public class Main
     float clickedXPos, clickedYPos =0;
     boolean shoot = false;
     boolean menu = true;
-    boolean stopRender = false;
+    boolean gameOver = false;
     boolean reloadNeeded = false;
     int score =0;
     TrueTypeFont font;
@@ -39,6 +39,7 @@ public class Main
     private Object menuObj;
     private Object bkgd;
     private Object GUIObj;
+    private Object goverObj;
     
     private long lastPressed = 0;
     private long lastSwitch =0;
@@ -87,6 +88,8 @@ public class Main
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
         
         GUIObj = new Object("resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
+        
+        goverObj = new Object("resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -152,6 +155,10 @@ public class Main
         if(menu == true)
         {
             menuObj.render();
+        }
+        else if (gameOver == true)
+        {
+            goverObj.render();
         }
         else
         {
@@ -299,10 +306,7 @@ public class Main
                   }
                   processMouse();
                   startClicked();
-                  if(stopRender == false)
-                  {
-                      render();
-                  }
+                  render();
                   SoundStore.get().poll(0);
               }
               else
@@ -317,10 +321,7 @@ public class Main
                   processKeyboard();
                   processMouse();
                   update(delta);
-                  if(stopRender == false)
-                  {
-                      render();
-                  }
+                  render();
                   SoundStore.get().poll(0);
               }
           }
@@ -345,14 +346,18 @@ public class Main
         {
             reloadNeeded = true;
         }
-        constrainPlayer();
-        addPoPo();
-        updateLocations();
-        policeMove();
-        bulletCol();
-        playDeath();
-        poShootYou();
-        playerHealthCheck();
+        
+        if(gameOver == false)
+        {
+            constrainPlayer();
+            addPoPo();
+            updateLocations();
+            policeMove();
+            bulletCol();
+            playDeath();
+            poShootYou();
+            playerHealthCheck();
+        }
     }
     
     public void updateLocations()
@@ -402,9 +407,7 @@ public class Main
     
     public void displayKillScreen()
     {
-        stopRender = true;
-        Object blackBox = new Object("resource/steak.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 16.0f, 16.0f);
-        blackBox.render();
+        gameOver = true;
     }
     
     public void policeMove()
