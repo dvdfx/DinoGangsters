@@ -237,9 +237,9 @@ public class Main
     public void addPoPo()
     {
         Random randomGenerator = new Random();
-        int chance = randomGenerator.nextInt(200);
+        int chance = randomGenerator.nextInt(150);
                 
-        if(chance == 82)
+        if(chance == 75)
         {
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
