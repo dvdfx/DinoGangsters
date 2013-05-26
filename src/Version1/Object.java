@@ -58,10 +58,10 @@ public class Object
             texture.bind();
         }
         glBegin(GL_QUADS);
-            glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos + height);
-            glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos + height);
+            glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
+            glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
+            glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
+            glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
         glEnd();
     }
 }
