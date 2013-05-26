@@ -6,6 +6,7 @@ import java.awt.Font;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -32,6 +33,10 @@ public class Main
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
     
+    private long lastFrame;
+    private int fps;
+    private long lastFPS;
+    
     public static void main(String[] args)
     {
         Main main = null;
@@ -50,8 +55,10 @@ public class Main
     
     public void create() throws LWJGLException
     {
-        
         initGL(SCREEN_WIDTH, SCREEN_HEIGHT);
+        
+        getDelta();
+        lastFPS = getTime();
         
         //wObjs.add(new Object());
         testObj = new Object();
@@ -80,7 +87,7 @@ public class Main
         {
             Display.setDisplayMode(new DisplayMode(width,height));
             Display.create();
-            Display.setVSyncEnabled(true);
+            //Display.setVSyncEnabled(true);
 	}
         catch (LWJGLException e)
         {
@@ -180,16 +187,19 @@ public class Main
       {
           if(Display.isVisible())
           {
+              int delta = getDelta();
               processKeyboard();
               processMouse();
-              update();
+              update(delta);
               render();
           }
           Display.update();
+          Display.sync(60);
       }
+      Display.destroy();
     }
     
-    public void update()
+    public void update(int delta)
     {
         constrainPlayer();
         bulletMove();
@@ -235,11 +245,7 @@ public class Main
             int randY = randomGenerator.nextInt(200);
             
             Object police = new Object();
-<<<<<<< HEAD
-            police.init("resource/police.png", testObj.xPos+50+randX, 350+randY, 32, 64, 0, 0, 32, 64);
-=======
             police.init("resource/police.png", testObj.xPos+randX, testObj.yPos+randY, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
->>>>>>> 1fec9b38984ae7c751df98ee9a2e5231951161be
             policeObjs.add(police);
         }
     }
@@ -272,4 +278,17 @@ public class Main
         font.drawString(200, 200, "Score: "+score, Color.green);
     }
     
+    public int getDelta()
+    {
+        long time = getTime();
+        int delta = (int) (time - lastFrame);
+        lastFrame = time;
+        
+        return delta;
+    }
+    
+    public long getTime()
+    {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
 }
