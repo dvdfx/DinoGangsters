@@ -46,8 +46,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f,0,0,32,64);
-
+        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -144,7 +143,7 @@ public class Main
                 if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 200))
                 {
                   Object shot = new Object();
-                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4,0,0,4,4);
+                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4, 0, 0, 4, 4);
                   bulletObjs.add(shot);
                 }
               }
