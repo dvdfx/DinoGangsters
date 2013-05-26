@@ -40,8 +40,9 @@ public class Main
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
     
-    private Audio wavEffect;
+    private Audio menuMusic;
     private Audio fireSound;
+    private Audio inGameMusic;
     
     private long lastFrame;
     private int fps;
@@ -83,7 +84,8 @@ public class Main
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
                     
-        wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
+        menuMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
+        inGameMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/ingame1.wav"));
         fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
         
         Mouse.setGrabbed(false);
@@ -227,7 +229,8 @@ public class Main
               {
                   if(inMenu == false)
                   {
-                    wavEffect.playAsSoundEffect(1.0f, 1.0f, true);
+                    inGameMusic.stop();
+                    menuMusic.playAsSoundEffect(1.0f, 1.0f, true);
                     inMenu = true;
                   }
                   processMouse();
@@ -237,13 +240,18 @@ public class Main
               }
               else
               {
-                  wavEffect.stop();
-                  inMenu = false;
+                  if(inMenu == true)
+                  {
+                    menuMusic.stop();
+                    inGameMusic.playAsMusic(1.0f, 1.0f, true);
+                    inMenu = false;
+                  }
                   int delta = getDelta();
                   processKeyboard();
                   processMouse();
                   update(delta);
                   render();
+                  SoundStore.get().poll(0);
               }
           }
           Display.update();
