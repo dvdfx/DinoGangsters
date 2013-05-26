@@ -36,6 +36,7 @@ public class Main
     private Object player;
     private Object menuObj;
     private Object bkgd;
+    private Object GUIObj;
     
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
@@ -77,6 +78,8 @@ public class Main
         wObjs.add(player);
         
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
+        
+        //GUIObj = new Object()
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -126,6 +129,7 @@ public class Main
         //gluOrtho2D(0.0f,width,0.0f,height);
 	glMatrixMode(GL_MODELVIEW);
         
+        glDisable(GL_LINE_SMOOTH);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
     }
@@ -142,8 +146,7 @@ public class Main
         else
         {
             bkgd.render();
-            player.changeSprite(player.getSpriteX() + 32, 0);
-            player.render();
+            //player.changeSprite(player.getSpriteX() + 32, 0);
             for(int i = 0; i < wObjs.size(); i++)
             {
                 if(wObjs.get(i).type.equals("Police"))
@@ -177,11 +180,13 @@ public class Main
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
             player.xPos += 4;
+            player.changeSprite(player.getSpriteX() + 32, 0);
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
         {
             player.xPos -= 4;
+            player.changeSprite(player.getSpriteX() + 32, 0);
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
@@ -194,21 +199,12 @@ public class Main
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
-              shoot = true;
-              if(wObjs.size() > 0)
-              {
-                if(wObjs.get(wObjs.size()-1).xPos > (player.xPos + 80))
-                {
-                  fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
-                }
-              }
-              else
-              {
-                  fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
-              }
-        }
+             if(wObjs.get(wObjs.size()-1).xPos > (player.xPos + 80))
+             {
+                 fireSound.playAsSoundEffect(1.0f, 1.0f, false);
+                 wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
+             }
+         }
     }
     
     public void run()            
@@ -296,7 +292,7 @@ public class Main
                 if(((Police)wObjs.get(i)).shotLimit < 3)
                 {
                     wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false));
-                    ((Police)wObjs.get(i)).shotLimit++;           
+                    ((Police)wObjs.get(i)).shotLimit++;                                           
                 }
             }
         }
@@ -317,6 +313,15 @@ public class Main
                     else
                     {
                         wObjs.get(i).xPos += 1;
+                    }
+                    
+                    if(wObjs.get(i).yPos - player.yPos > 0)
+                    {
+                        wObjs.get(i).yPos -=1;
+                    }
+                    else
+                    {
+                        wObjs.get(i).yPos +=1;
                     }
                 }
             }
@@ -351,7 +356,7 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).health < 10)
                 {
-                    ((Police)wObjs.get(i)).width = 64;
+                    ((Police)wObjs.get(i)).width =  64;
                     ((Police)wObjs.get(i)).height = 64;
                     ((Police)wObjs.get(i)).changeSprite(32, 64);
                     ((Police)wObjs.get(i)).deathTimer -= 10;
@@ -394,7 +399,7 @@ public class Main
                 {
                     if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos + o2.width)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos + o2.height))
                     {
-                        System.err.println("COLLISION!");
+                        //System.err.println("COLLISION!");
                         if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != player && o2 != player))
                         {
                             if(o1.type.equals("Police"))
