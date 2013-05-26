@@ -259,8 +259,10 @@ public class Main
         constrainPlayer();
         bulletMove();
         addPoPo();
+        policeMove();
         bulletCol();
         playDeath();
+        poShootYou();
     }
     
     public void startClicked()
@@ -272,6 +274,41 @@ public class Main
         else if(Mouse.isButtonDown(0))
         {
            // System.out.println(clickedYPos);
+        }
+    }
+    
+    public void poShootYou()
+    {
+        for(int i=0; i < wObjs.size(); i++)
+        {
+            if(wObjs.get(i).type.equals("Police"))
+            {
+                if(((Police)wObjs.get(i)).shotLimit < 3)
+                {
+                    Object pshot = new Object();
+                    pshot.init("resource/bullet.png",wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, 8, 8, 0, 0, 4, 4);
+                    wObjs.add(pshot);
+                    ((Police)wObjs.get(i)).shotLimit++;           
+                }
+            }
+        }
+    }
+    
+    public void policeMove()
+    {
+        for(int i=0; i < wObjs.size(); i++)
+        {
+            if(wObjs.get(i).type.equals("Police"))
+            {
+                if(wObjs.get(i).xPos - testObj.xPos > 0)    
+                {
+                    wObjs.get(i).xPos -= 1;
+                }
+                else
+                {
+                    wObjs.get(i).xPos += 1;
+                }
+            }
         }
     }
     
@@ -302,6 +339,9 @@ public class Main
             {
                 wObjs.get(i).xPos += 8;
             }
+            //if(wObjs.get(i).type.equals("Bullet"))
+            //{
+            //}
         }
     }
     

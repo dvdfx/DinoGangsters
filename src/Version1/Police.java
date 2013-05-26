@@ -15,7 +15,7 @@ public class Police extends Object
 {     
     int health = 100;
     int deathTimer = 1000;
-    int shotLimit = 3;
+    int shotLimit = 0;
     boolean flagDamage = false;
     
     public Police(float x, float y, float w, float h)
