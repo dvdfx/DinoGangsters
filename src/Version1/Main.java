@@ -45,6 +45,7 @@ public class Main
     
     private Audio menuMusic;
     private Audio fireSound;
+    private Audio roarSound;
     private Audio inGameMusic;
     
     private long lastFrame;
@@ -89,6 +90,7 @@ public class Main
         menuMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
         inGameMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/ingame1.wav"));
         fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
+        roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/roar.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -419,14 +421,14 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).health < 10)
                 {
+                    if(((Police)wObjs.get(i)).deathTimer == 0)
+                    {
+                        roarSound.playAsSoundEffect(1.0f, 1.0f, false);
+                    }
                     ((Police)wObjs.get(i)).width =  64;
                     ((Police)wObjs.get(i)).height = 64;
                     ((Police)wObjs.get(i)).changeSprite(32, 64);
-                    ((Police)wObjs.get(i)).deathTimer -= 10;
-                    if(((Police)wObjs.get(i)).deathTimer <0)
-                    {
-                        ((Police)wObjs.get(i)).changeSprite(0, 0);
-                    }
+                    ((Police)wObjs.get(i)).deathTimer += 10;
                 }
             }
         }
@@ -533,7 +535,7 @@ public class Main
             {
                 if(((Police)obj).getHealth() < 10)
                 {
-                    if(((Police)obj).deathTimer < 0)
+                    if(((Police)obj).deathTimer > 1000)
                     {
                         obj.setToRemove(true);
                         score++;
