@@ -139,11 +139,11 @@ public class Main
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
         {
-            testObj.yPos += 1;
+            testObj.yPos -= 1;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
         {
-            testObj.yPos -= 1;
+            testObj.yPos += 1;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
@@ -199,13 +199,13 @@ public class Main
         {
             testObj.xPos = 970;
         }
-        if(testObj.yPos < 2)
+        if(testObj.yPos > 550)
         {
-            testObj.yPos = 2;
+            testObj.yPos = 550;
         }
-        if(testObj.yPos > 150)
+        if(testObj.yPos < 350)
         {
-            testObj.yPos = 150;
+            testObj.yPos = 350;
         }
     }
     public void bulletMove()
@@ -224,10 +224,10 @@ public class Main
         if(chance == 501)
         {
             int randX = randomGenerator.nextInt(600);
-            int randY = randomGenerator.nextInt(120);
+            int randY = randomGenerator.nextInt(200);
             
             Object police = new Object();
-            police.init("resource/police.png", testObj.xPos+50+randX, randY, 32, 64, 0, 0, 32, 64);
+            police.init("resource/police.png", testObj.xPos+50+randX, 350+randY, 32, 64, 0, 0, 32, 64);
             policeObjs.add(police);
         }
     }
@@ -244,6 +244,14 @@ public class Main
                     score++;
                 }
             }
+        }
+        
+        for(int i=0; i<bulletObjs.size(); i++)
+        {
+          if(bulletObjs.get(i).xPos > 400)
+          {
+              //bulletObjs.get(i) = null;
+          }
         }
     }
     
