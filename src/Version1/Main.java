@@ -319,9 +319,10 @@ public class Main
             if(wObjs.get(i).type.equals("Police"))
             {
                 if(((Police)wObjs.get(i)).health < 10)
-                {
-                    ((Police)wObjs.get(i)).changeSprite(64, 64);
-                    wObjs.get(i).flip = true;
+                {                   
+                    ((Police)wObjs.get(i)).width = 64;
+                    ((Police)wObjs.get(i)).height = 64;
+                    ((Police)wObjs.get(i)).changeSprite(32, 64);
                     ((Police)wObjs.get(i)).deathTimer -= 10;
                     if(((Police)wObjs.get(i)).deathTimer <0)
                     {
