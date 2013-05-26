@@ -31,6 +31,7 @@ public class Main
     boolean shoot = false;
     boolean menu = true;
     boolean stopRender = false;
+    boolean reloadNeeded = false;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -253,7 +254,10 @@ public class Main
         {
             if(player.getBurstShots() < player.getBurstRate())
             {
-                ((Player)player).setShooting(true);
+                if(reloadNeeded == false)
+                {
+                     ((Player)player).setShooting(true);
+                }
             }
             else
             {
@@ -264,6 +268,15 @@ public class Main
         {
             ((Player)player).setShooting(false);
             player.setBurstShots(0);
+        }
+        
+        if(Keyboard.isKeyDown(Keyboard.KEY_R))
+        {
+            if(reloadNeeded)
+            {
+                player.setShotsFired(0);
+                reloadNeeded = false;
+            }
         }
     }
     
@@ -325,6 +338,10 @@ public class Main
             player.incBurstShots(1);
             player.incShotsFired(1);
             player.setLastFired(getTime());
+        }
+        if(player.getShotsFired() == player.shotLimit)
+        {
+            reloadNeeded = true;
         }
         constrainPlayer();
         addPoPo();
@@ -633,7 +650,7 @@ public class Main
         font.drawString(20, 5, "Score: "+score, Color.green);
         font.drawString(280, 5, "Health: "+player.health, Color.green);
         font.drawString(540, 5, "Weapon: Tommy", Color.green);
-        font.drawString(800, 5, "Ammo: 12", Color.green);
+        font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired()), Color.green);
     }
     
     public int getDelta()

@@ -11,7 +11,7 @@ package Version1;
 public class Player extends Object
 {
     int health = 100;
-    int shotLimit = 0;
+    int shotLimit = 12;
     boolean flagDamage = false;
     private boolean isShooting = false;
     private int burstRate = 3;
