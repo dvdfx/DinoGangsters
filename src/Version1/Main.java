@@ -55,6 +55,7 @@ public class Main
     private Audio roarSound;
     private Audio hitSound;
     private Audio reloadSound;
+    private Audio gameOverSound;
     private Audio inGameMusic;
     
     private long lastFrame;
@@ -106,6 +107,7 @@ public class Main
         roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/roar.wav"));
         hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/hit.wav"));
         reloadSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/reload.wav"));
+        gameOverSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/gameover.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -434,6 +436,8 @@ public class Main
     {
         if(player.health < 5)
         {
+            inGameMusic.stop();
+            gameOverSound.playAsSoundEffect(1.0f, 1.0f, false);
             displayKillScreen();
         }
     }
