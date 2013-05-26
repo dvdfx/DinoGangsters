@@ -52,6 +52,7 @@ public class Main
     private Audio fireSound;
     private Audio roarSound;
     private Audio hitSound;
+    private Audio reloadSound;
     private Audio inGameMusic;
     
     private long lastFrame;
@@ -102,6 +103,7 @@ public class Main
         fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
         roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/roar.wav"));
         hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/hit.wav"));
+        reloadSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/reload.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -286,6 +288,7 @@ public class Main
         {
             if(reloadNeeded && player.getTotalAmmo() > 0)
             {
+                reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
                 player.setShotsFired(0);
                 player.setTotalAmmo(-12);
                 reloadNeeded = false;
