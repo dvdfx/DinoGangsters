@@ -328,13 +328,16 @@ public class Main
             while(secondIter.hasNext())
             {
                 Object o2 = (Object) secondIter.next();
-                if(o1 != o2 && (o1.type.equals("Bullet") || o2.type.equals("Bullet")) && (o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
+                if(o1 != o2)
                 {
-                    firstIter.remove();
-                    secondIter.remove();
+                    if((o1.type.equals("Bullet") || o2.type.equals("Bullet")) && (o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
+                    {
+                        firstIter.remove();
+                        secondIter.remove();
                     
-                    score++;
-                    break;
+                        score++;
+                        break;
+                    }
                 }
             }
             }
