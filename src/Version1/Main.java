@@ -144,28 +144,28 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
-            testObj.xPos += 0.5;
+            testObj.xPos += 4;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
         {
-            testObj.xPos -= 0.5;
+            testObj.xPos -= 4;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
         {
-            testObj.yPos -= 1;
+            testObj.yPos -= 4;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
         {
-            testObj.yPos += 1;
+            testObj.yPos += 4;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
               shoot = true;
               if(bulletObjs.size() > 0)
               {
-                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 100))
+                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 80))
                 {
                   Object shot = new Object();
                   shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
@@ -230,16 +230,16 @@ public class Main
     {
         for(int i = 0; i < bulletObjs.size(); i++)
         {
-            bulletObjs.get(i).xPos += 1;
+            bulletObjs.get(i).xPos += 8;
         }
     }
     
     public void addPoPo()
     {
         Random randomGenerator = new Random();
-        int chance = randomGenerator.nextInt(1000);
+        int chance = randomGenerator.nextInt(200);
                 
-        if(chance == 501)
+        if(chance == 82)
         {
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
@@ -256,7 +256,7 @@ public class Main
         {
             for(int j=0; j<policeObjs.size(); j++)
             {
-                if((bulletObjs.get(i).xPos == policeObjs.get(j).xPos)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+128))
+                if((bulletObjs.get(i).xPos > policeObjs.get(j).xPos)&&(bulletObjs.get(i).xPos < policeObjs.get(j).xPos+32)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+128))
                 {
                     policeObjs.get(j).xPos = 2000;
                     score++;
