@@ -33,7 +33,7 @@ public class Main
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
-    private Object testObj;
+    private Object player;
     private Object menuObj;
     private Object bkgd;
     
@@ -73,8 +73,8 @@ public class Main
         
         menuObj = new Object("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        testObj = new Object("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
-        wObjs.add(testObj);
+        player = new Object("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        wObjs.add(player);
         
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
         
@@ -142,8 +142,8 @@ public class Main
         else
         {
             bkgd.render();
-            testObj.changeSprite(testObj.getSpriteX() + 32, 0);
-            testObj.render();
+            player.changeSprite(player.getSpriteX() + 32, 0);
+            player.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
                 if(wObjs.get(i).type.equals("Police"))
@@ -176,37 +176,37 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
-            testObj.xPos += 4;
+            player.xPos += 4;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
         {
-            testObj.xPos -= 4;
+            player.xPos -= 4;
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
         {
-            testObj.yPos -= 4;
+            player.yPos -= 4;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
         {
-            testObj.yPos += 4;
+            player.yPos += 4;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
               shoot = true;
               if(wObjs.size() > 0)
               {
-                if(wObjs.get(wObjs.size()-1).xPos > (testObj.xPos + 80))
+                if(wObjs.get(wObjs.size()-1).xPos > (player.xPos + 80))
                 {
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet(testObj.xPos +50 , testObj.yPos +75, true));
+                  wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
                 }
               }
               else
               {
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet(testObj.xPos +50 , testObj.yPos +75, true));
+                  wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
               }
         }
     }
@@ -300,7 +300,7 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).health > 10)
                 {
-                    if(wObjs.get(i).xPos - testObj.xPos > 0)    
+                    if(wObjs.get(i).xPos - player.xPos > 0)    
                     {
                         wObjs.get(i).xPos -= 1;
                     }
@@ -315,21 +315,21 @@ public class Main
     
     public void constrainPlayer()
     {
-        if(testObj.xPos < 5)
+        if(player.xPos < 5)
         {
-            testObj.xPos = 5;
+            player.xPos = 5;
         }
-        if(testObj.xPos > 960)
+        if(player.xPos > 960)
         {
-            testObj.xPos = 960;
+            player.xPos = 960;
         }
-        if(testObj.yPos > 465)
+        if(player.yPos > 465)
         {
-            testObj.yPos = 465;
+            player.yPos = 465;
         }
-        if(testObj.yPos < 350)
+        if(player.yPos < 350)
         {
-            testObj.yPos = 350;
+            player.yPos = 350;
         }
     }
     public void bulletMove()
@@ -377,7 +377,7 @@ public class Main
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
-            wObjs.add(new Police(testObj.xPos+80+randX, 350+randY, 64, 128));
+            wObjs.add(new Police(player.xPos+80+randX, 350+randY, 64, 128));
         }
     }
     
@@ -398,7 +398,7 @@ public class Main
                     if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos + o2.width)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos + o2.height))
                     {
                         System.err.println("COLLISION!");
-                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != testObj && o2 != testObj))
+                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != player && o2 != player))
                         {
                             if(o1.type.equals("Police"))
                             {
