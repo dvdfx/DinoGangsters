@@ -304,7 +304,7 @@ public class Main
     
     public void bulletCol()
     {
-        for(int i=0; i<bulletObjs.size(); i++)
+        /*for(int i=0; i<bulletObjs.size(); i++)
         {
             for(int j=0; j<policeObjs.size(); j++)
             {
@@ -316,15 +316,34 @@ public class Main
                     break;
                 }
             }
+        }*/
+        
+        ListIterator bulletIter = bulletObjs.listIterator();
+        while(bulletIter.hasNext())
+        {
+            Object bullet = (Object) bulletIter.next();
+            
+            ListIterator policeIter = policeObjs.listIterator();
+            while(policeIter.hasNext())
+            {
+                Object police = (Object) policeIter.next();
+                if((bullet.xPos > police.xPos)&&(bullet.xPos < police.xPos+32)&&(bullet.yPos > police.yPos) &&(bullet.yPos < police.yPos+128))
+                {
+                    bulletIter.remove();
+                    policeIter.remove();
+                    
+                    score++;
+                }
+            }
         }
         
-        for(int i=0; i<bulletObjs.size(); i++)
+        /*for(int i=0; i<bulletObjs.size(); i++)
         {
           if(bulletObjs.get(i).xPos > 930)
           {
               bulletObjs.remove(i);
           }
-        }
+        }*/
     }
     
     public void displayScore()
