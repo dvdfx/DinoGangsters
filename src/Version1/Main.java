@@ -46,7 +46,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f);
+        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f,0,0,32,64);
 
         
         Mouse.setGrabbed(false);
@@ -144,14 +144,14 @@ public class Main
                 if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 200))
                 {
                   Object shot = new Object();
-                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4);
+                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4,0,0,4,4);
                   bulletObjs.add(shot);
                 }
               }
               else
               {
                   Object shot = new Object();
-                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4);
+                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4, 0, 0, 4, 4);
                   bulletObjs.add(shot);
               }
         }
@@ -215,10 +215,10 @@ public class Main
         if(chance == 501)
         {
             int randX = randomGenerator.nextInt(600);
-            int randY = randomGenerator.nextInt(100);
+            int randY = randomGenerator.nextInt(120);
             
             Object police = new Object();
-            police.init("resource/police.png", testObj.xPos+randX, testObj.yPos+randY, 32, 64);
+            police.init("resource/police.png", testObj.xPos+50+randX, randY, 32, 64, 0, 0, 32, 64);
             policeObjs.add(police);
         }
     }
