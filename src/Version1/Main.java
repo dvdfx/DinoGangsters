@@ -211,15 +211,15 @@ public class Main
             {            
                 if(player.getSpriteX() == 0)
                 {
-                    player.changeSprite(32, 0);
+                    player.changeSprite(32, player.getSpriteY());
                 }
                 else if(player.getSpriteX() == 32)
                 {
-                    player.changeSprite(64, 0);
+                    player.changeSprite(64, player.getSpriteY());
                 }
                 else
                 {
-                    player.changeSprite(0, 0);
+                    player.changeSprite(0, player.getSpriteY());
                 }         
             }
             lastPressed = getTime();
@@ -234,15 +234,15 @@ public class Main
             {
                 if(player.getSpriteX() == 64)
                 {
-                    player.changeSprite(32, 0);
+                    player.changeSprite(32, player.getSpriteY());
                 }
                 else if(player.getSpriteX() == 32)
                 {
-                    player.changeSprite(0, 0);
+                    player.changeSprite(0, player.getSpriteY());
                 }
                 else
                 {
-                    player.changeSprite(64, 0);
+                    player.changeSprite(64, player.getSpriteY());
                 }
             }
             lastPressed = getTime();
@@ -502,9 +502,9 @@ public class Main
         {
             player.xPos = 960;
         }
-        if(player.yPos > 465)
+        if(player.yPos > 480)
         {
-            player.yPos = 465;
+            player.yPos = 480;
         }
         if(player.yPos < 350)
         {
