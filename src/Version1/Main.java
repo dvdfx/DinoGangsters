@@ -30,6 +30,7 @@ public class Main
     float clickedXPos, clickedYPos =0;
     boolean shoot = false;
     boolean menu = true;
+    boolean stopRender = false;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -279,7 +280,10 @@ public class Main
                   }
                   processMouse();
                   startClicked();
-                  render();
+                  if(stopRender == false)
+                  {
+                      render();
+                  }
                   SoundStore.get().poll(0);
               }
               else
@@ -294,7 +298,10 @@ public class Main
                   processKeyboard();
                   processMouse();
                   update(delta);
-                  render();
+                  if(stopRender == false)
+                  {
+                      render();
+                  }
                   SoundStore.get().poll(0);
               }
           }
@@ -310,7 +317,7 @@ public class Main
         if(player.isShooting() && player.getLastFired() + 50 < getTime())
         {
             fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-            wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
+            wObjs.add(new Bullet(player.xPos +60 , player.yPos +75, true));
             player.incBurstShots(1);
             player.incShotsFired(1);
             player.setLastFired(getTime());
@@ -322,6 +329,7 @@ public class Main
         bulletCol();
         playDeath();
         poShootYou();
+        playerHealthCheck();
     }
     
     public void updateLocations()
@@ -359,6 +367,21 @@ public class Main
                 }
             }
         }
+    }
+    
+    public void playerHealthCheck()
+    {
+        if(player.health < 5)
+        {
+            displayKillScreen();
+        }
+    }
+    
+    public void displayKillScreen()
+    {
+        stopRender = true;
+        Object blackBox = new Object("resource/steak.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 16.0f, 16.0f);
+        blackBox.render();
     }
     
     public void policeMove()
@@ -425,7 +448,7 @@ public class Main
                     ((Police)wObjs.get(i)).deathTimer -= 10;
                     if(((Police)wObjs.get(i)).deathTimer <0)
                     {
-                        ((Police)wObjs.get(i)).changeSprite(0, 0);
+                        //((Police)wObjs.get(i)).changeSprite(0, 0);
                     }
                 }
             }
@@ -504,6 +527,46 @@ public class Main
                             }
                     
                             break;
+                        }
+                        
+                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (!o1.type.equals("Police") && !o2.type.equals("Police")))
+                        {
+                            if(o1 == player)
+                            {
+                                if(player.health >4)
+                                {
+                                    player.takeDamage();
+                                    //((Police)o1).flagDamage = true;                                
+                                }
+                            }
+                            else
+                            {
+                                if(o2 == player)
+                                {
+                                    if(player.health >4)
+                                    {
+                                        o1.setToRemove(true);
+                                    }
+                                }
+                            }   
+                            if(o2 == player)
+                            {
+                                if(player.health >4)
+                                {
+                                    player.takeDamage();
+                                    //((Police)o1).flagDamage = true;                                
+                                }
+                            }
+                            else
+                            {
+                                if(o1 == player)
+                                {
+                                    if(player.health >5)
+                                    {
+                                        o2.setToRemove(true);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

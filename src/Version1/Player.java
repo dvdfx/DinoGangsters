@@ -79,4 +79,8 @@ public class Player extends Object
     {
         return burstRate;
     }
+    public void takeDamage()
+    {
+        this.health -= 5;
+    }
 }
