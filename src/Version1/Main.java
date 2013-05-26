@@ -17,7 +17,7 @@ public class Main
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
-    boolean sleep = false;
+    boolean shoot = false;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
     
@@ -97,6 +97,10 @@ public class Main
         glLoadIdentity();
         
         testObj.render();
+        for(int i = 0; i < wObjs.size(); i++)
+        {
+            wObjs.get(i).render();
+        }
     }
     
     public void processMouse()
@@ -108,7 +112,6 @@ public class Main
     
     public void processKeyboard()
     {
-        boolean shoot = false;
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
             testObj.xPos += 0.5;
@@ -127,11 +130,11 @@ public class Main
         {
             testObj.yPos -= 1;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && shoot == false)
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))// && shoot == false)
         {
               shoot = true;
               Object shot = new Object();
-              shot.init("resource/rex.png", square2x1, square2y1, square2x1, square2x1);
+              shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +40, 4, 4);
               wObjs.add(shot);
         }
     }
@@ -154,6 +157,7 @@ public class Main
     public void update()
     {
         constrainPlayer();
+        bulletMove();
     }
     
     public void constrainPlayer()
@@ -173,6 +177,13 @@ public class Main
         if(testObj.yPos > 150)
         {
             testObj.yPos = 150;
+        }
+    }
+    public void bulletMove()
+    {
+        for(int i = 0; i < wObjs.size(); i++)
+        {
+            wObjs.get(i).xPos += 5;
         }
     }
 }
