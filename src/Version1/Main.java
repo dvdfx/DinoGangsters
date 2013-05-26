@@ -545,7 +545,9 @@ public class Main
     
     public void displayScore()
     {
-        font.drawString(50, 20, "Score: "+score, Color.green);
+        font.drawString(20, 5, "Score: "+score, Color.green);
+        font.drawString(280, 5, "Health: "+player.health, Color.green);
+        font.drawString(540, 5, "Weapon: Tommy", Color.green);
     }
     
     public int getDelta()
