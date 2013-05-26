@@ -3,6 +3,7 @@ package Version1;
 import java.util.*;
 import java.util.Random;
 import java.awt.Font;
+import java.io.IOException;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -15,6 +16,10 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.util.ResourceLoader;
+import org.lwjgl.openal.AL;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.openal.SoundStore;
 
 public class Main
 {
@@ -22,16 +27,21 @@ public class Main
     float square2y1 = 50;
     float square2x2 = 100;
     float square2y2  = 100;
+    float clickedXPos, clickedYPos =0;
     boolean shoot = false;
+    boolean menu = true;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> bulletObjs = new ArrayList<Object>();
     private ArrayList<Object> policeObjs = new ArrayList<Object>();
     private Object testObj;
+    private Object menuObj;
     private Object bkgd;
     
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
+    
+    private Audio wavEffect;
     
     private long lastFrame;
     private int fps;
@@ -53,14 +63,16 @@ public class Main
     }
     
     
-    public void create() throws LWJGLException
+    public void create() throws LWJGLException, IOException
     {
         initGL(SCREEN_WIDTH, SCREEN_HEIGHT);
         
         getDelta();
         lastFPS = getTime();
         
-        //wObjs.add(new Object());
+        menuObj = new Object();
+        menuObj.init("resource/ammo.png", 50.0f, 80.0f, 916f, 520f, 0.0f, 0.0f, 16f, 16f);
+        
         testObj = new Object();
         testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         
@@ -69,6 +81,8 @@ public class Main
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
+                    
+        wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -77,6 +91,7 @@ public class Main
      
     public void destroy()
     {
+        AL.destroy();
         Mouse.destroy();
         Display.destroy();
     }
@@ -119,24 +134,31 @@ public class Main
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
         
-        bkgd.render();
-        testObj.render();
-        for(int i = 0; i < bulletObjs.size(); i++)
+        if(menu == true)
         {
-            bulletObjs.get(i).render();
+            menuObj.render();
         }
-        for(int j =0; j < policeObjs.size(); j++)
+        else
         {
-            policeObjs.get(j).render();
-        }
+            bkgd.render();
+            testObj.render();
+            for(int i = 0; i < bulletObjs.size(); i++)
+            {
+                bulletObjs.get(i).render();
+            }
+            for(int j =0; j < policeObjs.size(); j++)
+            {
+                policeObjs.get(j).render();
+            }
         
-        displayScore();
+            displayScore();
+        }
     }
     
     public void processMouse()
     {
-        float XPos = Mouse.getX();
-        float YPos = Mouse.getY();
+        clickedXPos = Mouse.getX();
+        clickedYPos = Mouse.getY();
              
     }
     
@@ -183,15 +205,28 @@ public class Main
     
     public void run()            
     {
+      wavEffect.playAsSoundEffect(1.0f, 1.0f, true);
       while(!Display.isCloseRequested())
       {
           if(Display.isVisible())
           {
-              int delta = getDelta();
-              processKeyboard();
-              processMouse();
-              update(delta);
-              render();
+              if(menu == true)
+              {
+                  processMouse();
+                  startClicked();
+                  playMusic();
+                  render();
+                  SoundStore.get().poll(0);
+              }
+              else
+              {
+                  AL.destroy();
+                  int delta = getDelta();
+                  processKeyboard();
+                  processMouse();
+                  update(delta);
+                  render();
+              }
           }
           Display.update();
           Display.sync(60);
@@ -205,6 +240,23 @@ public class Main
         bulletMove();
         addPoPo();
         bulletCol();
+    }
+    
+    public void startClicked()
+    {
+        if((Mouse.isButtonDown(0))&&(clickedXPos > 350)&&(clickedXPos < 650 ))
+        {
+            menu = false;
+        }
+        else if(Mouse.isButtonDown(0))
+        {
+            System.out.println(clickedXPos);
+        }
+    }
+    
+    public void playMusic()
+    {
+        
     }
     
     public void constrainPlayer()
@@ -258,17 +310,19 @@ public class Main
             {
                 if((bulletObjs.get(i).xPos > policeObjs.get(j).xPos)&&(bulletObjs.get(i).xPos < policeObjs.get(j).xPos+32)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+128))
                 {
-                    policeObjs.get(j).xPos = 2000;
+                    policeObjs.remove(j);
+                    bulletObjs.remove(i);
                     score++;
+                    break;
                 }
             }
         }
         
         for(int i=0; i<bulletObjs.size(); i++)
         {
-          if(bulletObjs.get(i).xPos > 400)
+          if(bulletObjs.get(i).xPos > 930)
           {
-              //bulletObjs.get(i) = null;
+              bulletObjs.remove(i);
           }
         }
     }
