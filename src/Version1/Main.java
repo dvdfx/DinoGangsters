@@ -285,9 +285,7 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).shotLimit < 3)
                 {
-                    Object pshot = new Object();
-                    pshot.init("resource/bullet.png",wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, 8, 8, 0, 0, 4, 4);
-                    wObjs.add(pshot);
+                    wObjs.add(new Bullet("resource/bullet.png",wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, 8, 8, 0, 0, 4, 4));
                     ((Police)wObjs.get(i)).shotLimit++;           
                 }
             }
