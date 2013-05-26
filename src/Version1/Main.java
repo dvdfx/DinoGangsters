@@ -44,7 +44,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/ammo.png", 0.0f, 0.0f, 64.0f, 64.0f);
+        testObj.init("resource/rex.png", 0.0f, 0.0f, 64.0f, 64.0f);
 
         
         Mouse.setGrabbed(false);
@@ -108,6 +108,7 @@ public class Main
     
     public void processKeyboard()
     {
+        boolean shoot = false;
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
             testObj.xPos += 0.5;
@@ -125,6 +126,13 @@ public class Main
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
         {
             testObj.yPos -= 1;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && shoot == false)
+        {
+              shoot = true;
+              Object shot = new Object();
+              shot.init(null, square2x1, square2y1, square2x1, square2x1);
+              wObjs.add(shot);
         }
     }
     
@@ -145,7 +153,26 @@ public class Main
     
     public void update()
     {
-        ;
+        constrainPlayer();
     }
     
+    public void constrainPlayer()
+    {
+        if(testObj.xPos < 5)
+        {
+            testObj.xPos = 5;
+        }
+        if(testObj.xPos > 970)
+        {
+            testObj.xPos = 970;
+        }
+        if(testObj.yPos < 2)
+        {
+            testObj.yPos = 2;
+        }
+        if(testObj.yPos > 150)
+        {
+            testObj.yPos = 150;
+        }
+    }
 }
