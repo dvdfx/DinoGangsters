@@ -370,22 +370,40 @@ public class Main
                         {
                             if(o1.type.equals("Police"))
                             {
-                                ((Police)o1).takeDamage();
-                                ((Police)o1).flagDamage = true;
+                                if(((Police)o1).health >10)
+                                {
+                                    ((Police)o1).takeDamage();
+                                    ((Police)o1).flagDamage = true;                                
+                                }
                             }
                             else
                             {
-                                o1.setToRemove(true);
+                                if(o2.type.equals("Police"))
+                                {
+                                    if(((Police)o2).health >10)
+                                    {
+                                        o1.setToRemove(true);
+                                    }
+                                }
                             }
                             
                             if(o2.type.equals("Police"))
                             {
-                                ((Police)o2).takeDamage();
-                                ((Police)o2).flagDamage =true;
+                                if(((Police)o2).health >10)
+                                {
+                                    ((Police)o2).takeDamage();
+                                    ((Police)o2).flagDamage =true;
+                                }
                             }
                             else
                             {
-                                o2.setToRemove(true);
+                                if(o1.type.equals("Police"))
+                                {
+                                    if(((Police)o1).health >10)
+                                    {
+                                         o2.setToRemove(true);
+                                    }
+                                }
                             }
                     
                             break;
