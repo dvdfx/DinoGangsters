@@ -74,6 +74,7 @@ public class Main
         
         testObj = new Object();
         testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        wObjs.add(testObj);
         
         bkgd = new Object();
         bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 380.0f, 256.0f);
@@ -330,9 +331,10 @@ public class Main
                 Object o2 = (Object) secondIter.next();
                 if(o1 != o2)
                 {
-                    if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
+                    if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos + o2.width)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos + o2.height))
                     {
-                        if(o1.type.equals("Bullet") ^ o2.type.equals("Bullet"))
+                        System.err.println("COLLISION!");
+                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != testObj && o2 != testObj))
                         {
                             firstIter.remove();
                             secondIter.remove();
