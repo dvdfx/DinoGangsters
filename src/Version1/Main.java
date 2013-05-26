@@ -33,7 +33,7 @@ public class Main
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
-    private Object player;
+    private Player player;
     private Object menuObj;
     private Object bkgd;
     private Object GUIObj;
@@ -76,7 +76,7 @@ public class Main
         
         menuObj = new Object("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        player = new Object("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        player = new Player(10, 10);
         wObjs.add(player);
         
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
@@ -180,9 +180,9 @@ public class Main
     
     public void processKeyboard()
     {
-        if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+        if(Keyboard.isKeyDown(Keyboard.KEY_D))
         {
-            player.xPos += 4;
+            player.setXVel(4);
             long check = getTime();
             check = check - lastPressed;
             
@@ -203,12 +203,12 @@ public class Main
             }
             lastPressed = getTime();
         }
-        
-        if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+        else if(Keyboard.isKeyDown(Keyboard.KEY_A))
         {
+            player.setXVel(-4);
             long check2 = getTime();
             check2 = check2 - lastPressed;
-            player.xPos -= 4;
+            
             if(check2 <17)
             {
                 if(player.getSpriteX() == 64)
@@ -226,23 +226,40 @@ public class Main
             }
             lastPressed = getTime();
         }
+        else
+        {
+            player.setXVel(0);
+        }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+        if(Keyboard.isKeyDown(Keyboard.KEY_W))
         {
-            player.yPos -= 4;
+            player.setYVel(-3);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+        else if(Keyboard.isKeyDown(Keyboard.KEY_S))
         {
-            player.yPos += 4;
+            player.setYVel(3);
         }
+        else
+        {
+            player.setYVel(0);
+        }
+        
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
-             if(wObjs.get(wObjs.size()-1).xPos > (player.xPos + 80))
-             {
-                 fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                 wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
-             }
-         }
+            if(player.getBurstShots() < player.getBurstRate())
+            {
+                ((Player)player).setShooting(true);
+            }
+            else
+            {
+                ((Player)player).setShooting(false);
+            }
+        }
+        else
+        {
+            ((Player)player).setShooting(false);
+            player.setBurstShots(0);
+        }
     }
     
     public void run()            
@@ -290,6 +307,14 @@ public class Main
     
     public void update(int delta)
     {
+        if(player.isShooting() && player.getLastFired() + 50 < getTime())
+        {
+            fireSound.playAsSoundEffect(1.0f, 1.0f, false);
+            wObjs.add(new Bullet(player.xPos +50 , player.yPos +75, true));
+            player.incBurstShots(1);
+            player.incShotsFired(1);
+            player.setLastFired(getTime());
+        }
         constrainPlayer();
         addPoPo();
         updateLocations();
