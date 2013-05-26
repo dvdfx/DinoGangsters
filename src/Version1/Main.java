@@ -27,6 +27,10 @@ public class Main
     private ArrayList<Object> bulletObjs = new ArrayList<Object>();
     private ArrayList<Object> policeObjs = new ArrayList<Object>();
     private Object testObj;
+    private Object bkgd;
+    
+    private int SCREEN_WIDTH = 1024;
+    private int SCREEN_HEIGHT = 600;
     
     public static void main(String[] args)
     {
@@ -47,11 +51,14 @@ public class Main
     public void create() throws LWJGLException
     {
         
-        initGL(1024, 600);
+        initGL(SCREEN_WIDTH, SCREEN_HEIGHT);
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        
+        bkgd = new Object();
+        bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 40.0f, 380.0f, 200.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -105,6 +112,7 @@ public class Main
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
         
+        bkgd.render();
         testObj.render();
         for(int i = 0; i < bulletObjs.size(); i++)
         {
@@ -227,7 +235,11 @@ public class Main
             int randY = randomGenerator.nextInt(200);
             
             Object police = new Object();
+<<<<<<< HEAD
             police.init("resource/police.png", testObj.xPos+50+randX, 350+randY, 32, 64, 0, 0, 32, 64);
+=======
+            police.init("resource/police.png", testObj.xPos+randX, testObj.yPos+randY, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+>>>>>>> 1fec9b38984ae7c751df98ee9a2e5231951161be
             policeObjs.add(police);
         }
     }
