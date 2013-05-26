@@ -539,7 +539,6 @@ public class Main
                 
         if(chance == 75)
         {
-            int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
             wObjs.add(new Police(980, 350+randY));
