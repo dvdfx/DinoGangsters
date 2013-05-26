@@ -18,7 +18,7 @@ public class Object
 {
     protected String type;
     private boolean toRemove = false;
-    private Texture texture;
+    public Texture texture; //should be private?
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
     
@@ -66,7 +66,7 @@ public class Object
             glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
         glEnd();
     }
-    
+        
     public void changeSprite(float tx, float ty)
     {
         tOffX = tx;

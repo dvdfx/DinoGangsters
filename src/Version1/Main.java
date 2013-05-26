@@ -73,7 +73,7 @@ public class Main
         menuObj.init("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
         testObj = new Object();
-        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        testObj.init("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         wObjs.add(testObj);
         
         bkgd = new Object();
@@ -296,9 +296,9 @@ public class Main
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
-            Object police = new Object();
-            police.init("resource/police.png", testObj.xPos+50+randX, 350+randY, 64, 128, 0, 0, 32, 64);
-            wObjs.add(police);
+            Police p = new Police();
+            p.init(testObj.xPos+50+randX, 350+randY, 64, 128);
+            wObjs.add(p);
         }
     }
     
@@ -321,16 +321,32 @@ public class Main
                         System.err.println("COLLISION!");
                         if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != testObj && o2 != testObj))
                         {
-                            o1.setToRemove(true);
-                            o2.setToRemove(true);
+                            if(o1.type.equals("Police"))
+                            {
+                                ((Police)o1).takeDamage();
+                            }
+                            else
+                            {
+                                o1.setToRemove(true);
+                            }
+                            
+                            if(o2.type.equals("Police"))
+                            {
+                                ((Police)o2).takeDamage();
+                            }
+                            else
+                            {
+                                o2.setToRemove(true);
+                            }
                     
-                            score++;
                             break;
                         }
                     }
                 }
             }
         }
+        
+        checkIfDead();
         
         ListIterator wObjsIter = wObjs.listIterator();
         while(wObjsIter.hasNext())
@@ -339,6 +355,23 @@ public class Main
             if(obj.getToRemove())
             {
                 wObjsIter.remove();
+            }
+        }
+    }
+    
+    public void checkIfDead()
+    {
+        ListIterator policeIter = wObjs.listIterator();
+        while(policeIter.hasNext())
+        {
+            Object obj = (Object) policeIter.next();
+            if(obj.type.equals("Police"))
+            {
+                if(((Police)obj).getHealth() < 10)
+                {
+                   obj.setToRemove(true);
+                   score++;
+                }
             }
         }
     }

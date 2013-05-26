@@ -15,9 +15,13 @@ public class Police extends Object
 {     
     int health = 100;
     int shotLimit = 3;
-    private Texture texture = super.getTexture();
     
-    public void init(float x, float y, float w, float h)//, float tx, float ty, float tw, float th)
+    public Police()
+    {
+        type = "Police";
+    }
+    
+    public void init(float x, float y, float w, float h)
     {
         xPos = x;
         yPos = y;
@@ -43,4 +47,10 @@ public class Police extends Object
     {
         this.health -= 20;
     }
+    
+    public int getHealth()
+    {
+        return this.health;
+    }
+        
 }
