@@ -420,7 +420,7 @@ public class Main
         {
             if(wObjs.get(i).type.equals("Police"))
             {
-                if(((Police)wObjs.get(i)).shotLimit < 3)
+                if(((Police)wObjs.get(i)).shotLimit < 50)
                 {
                     wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false, "Police"));
                     ((Police)wObjs.get(i)).shotLimit++;                                           
@@ -540,7 +540,6 @@ public class Main
         if(chance == 75)
         {
             int randY = randomGenerator.nextInt(120);
-            
             wObjs.add(new Police(980, 350+randY));
         }
     }
@@ -658,7 +657,7 @@ public class Main
         while(wObjsIter.hasNext())
         {
             Object obj = (Object) wObjsIter.next();
-            if(obj.getToRemove() || (obj.type.equals("Bullet") && obj.xPos > SCREEN_WIDTH + 20))
+            if(obj.getToRemove() || (obj.type.equals("Bullet") && obj.xPos > SCREEN_WIDTH + 20) || (obj.type.equals("Bullet") && obj.xPos < -20))
             {
                 wObjsIter.remove();
             }
