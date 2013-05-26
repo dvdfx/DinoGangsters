@@ -49,6 +49,7 @@ public class Main
     private Audio menuMusic;
     private Audio fireSound;
     private Audio roarSound;
+    private Audio hitSound;
     private Audio inGameMusic;
     
     private long lastFrame;
@@ -94,6 +95,7 @@ public class Main
         inGameMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/ingame1.wav"));
         fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
         roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/roar.wav"));
+        hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/hit.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -505,7 +507,7 @@ public class Main
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
-            wObjs.add(new Police(980, 350+randY, 64, 128));
+            wObjs.add(new Police(980, 350+randY));
         }
     }
     
@@ -531,6 +533,7 @@ public class Main
                             {
                                 if(((Police)o1).health >10)
                                 {
+                                    hitSound.playAsSoundEffect(1.0f, 1.0f, false);
                                     ((Police)o1).takeDamage();
                                     ((Police)o1).flagDamage = true;                                
                                 }
@@ -550,6 +553,7 @@ public class Main
                             {
                                 if(((Police)o2).health >10)
                                 {
+                                    hitSound.playAsSoundEffect(1.0f, 1.0f, false);
                                     ((Police)o2).takeDamage();
                                     ((Police)o2).flagDamage =true;
                                 }
@@ -574,6 +578,7 @@ public class Main
                             {
                                 if(player.health >4)
                                 {
+                                    hitSound.playAsSoundEffect(1.0f, 1.0f, false);
                                     player.takeDamage();
                                     //((Police)o1).flagDamage = true;                                
                                 }
@@ -592,6 +597,7 @@ public class Main
                             {
                                 if(player.health >4)
                                 {
+                                    hitSound.playAsSoundEffect(1.0f, 1.0f, false);
                                     player.takeDamage();
                                     //((Police)o1).flagDamage = true;                                
                                 }

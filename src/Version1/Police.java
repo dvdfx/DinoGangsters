@@ -18,9 +18,9 @@ public class Police extends Object
     int shotLimit = 0;
     boolean flagDamage = false;
     
-    public Police(float x, float y, float w, float h)
+    public Police(float x, float y)
     {
-        super("resource/popoSprite2.png", x, y, w, h, 0, 0, 32, 64);
+        super("resource/popoSprite2.png", x, y, 64, 128, 0, 0, 32, 64);
         type = "Police";
     }
     
