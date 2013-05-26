@@ -17,6 +17,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Object
 {
     protected String type;
+    private boolean toRemove = false;
     private Texture texture;
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
@@ -82,8 +83,19 @@ public class Object
         return tOffY;
     }
     
+
     public Texture getTexture()
     {
         return texture;
+    }
+
+    public void setToRemove(boolean toRem)
+    {
+        toRemove = toRem;
+    }
+    
+    public boolean getToRemove()
+    {
+        return toRemove;
     }
 }

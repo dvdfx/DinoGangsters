@@ -304,28 +304,13 @@ public class Main
     
     public void bulletCol()
     {
-        /*for(int i=0; i<bulletObjs.size(); i++)
-        {
-            for(int j=0; j<policeObjs.size(); j++)
-            {
-                if((bulletObjs.get(i).xPos > policeObjs.get(j).xPos)&&(bulletObjs.get(i).xPos < policeObjs.get(j).xPos+32)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+128))
-                {
-                    policeObjs.remove(j);
-                    bulletObjs.remove(i);
-                    score++;
-                    break;
-                }
-            }
-        }*/
-        
         ListIterator firstIter = wObjs.listIterator();
         while(firstIter.hasNext())
         {
             Object o1 = (Object) firstIter.next();
             
             ListIterator secondIter = wObjs.listIterator();
-            try
-            {
+            
             while(secondIter.hasNext())
             {
                 Object o2 = (Object) secondIter.next();
@@ -336,8 +321,8 @@ public class Main
                         System.err.println("COLLISION!");
                         if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != testObj && o2 != testObj))
                         {
-                            firstIter.remove();
-                            secondIter.remove();
+                            o1.setToRemove(true);
+                            o2.setToRemove(true);
                     
                             score++;
                             break;
@@ -345,20 +330,17 @@ public class Main
                     }
                 }
             }
-            }
-            catch (Exception e)
-            {
-                System.err.println(e);
-            }
         }
         
-        /*for(int i=0; i<bulletObjs.size(); i++)
+        ListIterator wObjsIter = wObjs.listIterator();
+        while(wObjsIter.hasNext())
         {
-          if(bulletObjs.get(i).xPos > 930)
-          {
-              bulletObjs.remove(i);
-          }
-        }*/
+            Object obj = (Object) wObjsIter.next();
+            if(obj.getToRemove())
+            {
+                wObjsIter.remove();
+            }
+        }
     }
     
     public void displayScore()
