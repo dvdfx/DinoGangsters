@@ -131,7 +131,7 @@ public class Main
         {
               shoot = true;
               Object shot = new Object();
-              shot.init(null, square2x1, square2y1, square2x1, square2x1);
+              shot.init("resource/rex.png", square2x1, square2y1, square2x1, square2x1);
               wObjs.add(shot);
         }
     }
