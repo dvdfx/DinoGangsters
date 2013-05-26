@@ -18,31 +18,10 @@ public class Police extends Object
     int shotLimit = 3;
     boolean flagDamage = false;
     
-    public Police()
+    public Police(float x, float y, float w, float h)
     {
+        super("resource/popoSprite.png", x, y, w, h, 0, 0, 32, 64);
         type = "Police";
-    }
-    
-    public void init(float x, float y, float w, float h)
-    {
-        xPos = x;
-        yPos = y;
-        width = w;
-        height = h;
-        tOffX = 0;
-        tOffY = 0;
-        tOffW = 32;
-        tOffH = 64;
-        try
-        {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resource/popoSprite2.png"));
-        }
-        catch (IOException e)
-        {
-            texture = null;
-        }
-        texW = texture.getTextureWidth();
-        texH = texture.getTextureHeight();
     }
     
     public void takeDamage()

@@ -71,15 +71,12 @@ public class Main
         getDelta();
         lastFPS = getTime();
         
-        menuObj = new Object();
-        menuObj.init("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
+        menuObj = new Object("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        testObj = new Object();
-        testObj.init("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        testObj = new Object("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         wObjs.add(testObj);
         
-        bkgd = new Object();
-        bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 380.0f, 256.0f);
+        bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -145,7 +142,7 @@ public class Main
         else
         {
             bkgd.render();
-            testObj.changeSprite(0, 0);
+            testObj.changeSprite(testObj.getSpriteX() + 32, 0);
             testObj.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
@@ -202,18 +199,14 @@ public class Main
               {
                 if(wObjs.get(wObjs.size()-1).xPos > (testObj.xPos + 80))
                 {
-                  Bullet shot = new Bullet();
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
-                  wObjs.add(shot);
+                  wObjs.add(new Bullet("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4));
                 }
               }
               else
               {
-                  Bullet shot = new Bullet();
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
-                  wObjs.add(shot);
+                  wObjs.add(new Bullet("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4));
               }
         }
     }
@@ -319,10 +312,9 @@ public class Main
             if(wObjs.get(i).type.equals("Police"))
             {
                 if(((Police)wObjs.get(i)).health < 10)
-                {                   
-                    ((Police)wObjs.get(i)).width = 64;
-                    ((Police)wObjs.get(i)).height = 64;
-                    ((Police)wObjs.get(i)).changeSprite(32, 64);
+                {
+                    ((Police)wObjs.get(i)).changeSprite(64, 64);
+                    wObjs.get(i).flip = true;
                     ((Police)wObjs.get(i)).deathTimer -= 10;
                     if(((Police)wObjs.get(i)).deathTimer <0)
                     {
@@ -343,9 +335,7 @@ public class Main
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
-            Police p = new Police();
-            p.init(testObj.xPos+80+randX, 350+randY, 64, 128);
-            wObjs.add(p);
+            wObjs.add(new Police(testObj.xPos+80+randX, 350+randY, 64, 128));
         }
     }
     
@@ -370,40 +360,22 @@ public class Main
                         {
                             if(o1.type.equals("Police"))
                             {
-                                if(((Police)o1).health >10)
-                                {
-                                    ((Police)o1).takeDamage();
-                                    ((Police)o1).flagDamage = true;                                
-                                }
+                                ((Police)o1).takeDamage();
+                                ((Police)o1).flagDamage = true;
                             }
                             else
                             {
-                                if(o2.type.equals("Police"))
-                                {
-                                    if(((Police)o2).health >10)
-                                    {
-                                        o1.setToRemove(true);
-                                    }
-                                }
+                                o1.setToRemove(true);
                             }
                             
                             if(o2.type.equals("Police"))
                             {
-                                if(((Police)o2).health >10)
-                                {
-                                    ((Police)o2).takeDamage();
-                                    ((Police)o2).flagDamage =true;
-                                }
+                                ((Police)o2).takeDamage();
+                                ((Police)o2).flagDamage =true;
                             }
                             else
                             {
-                                if(o1.type.equals("Police"))
-                                {
-                                    if(((Police)o1).health >10)
-                                    {
-                                         o2.setToRemove(true);
-                                    }
-                                }
+                                o2.setToRemove(true);
                             }
                     
                             break;

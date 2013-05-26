@@ -21,15 +21,13 @@ public class Object
     public Texture texture; //should be private?
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
+    private float[] velocity;
     public boolean flip = false;
     
-    public Object()
+    public Object(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
     {
         type = "Object";
-    }
-    
-    public void init(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
-    {
+        
         xPos = x;
         yPos = y;
         width = w;
@@ -38,6 +36,9 @@ public class Object
         tOffY = ty;
         tOffW = tw;
         tOffH = th;
+        
+        velocity = new float[]{0, 0};
+                
         imgLoc = iLoc;
         System.out.println(imgLoc);
         try
@@ -60,12 +61,25 @@ public class Object
         {
             texture.bind();
         }
-        glBegin(GL_QUADS);
-            glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
-            glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
-        glEnd();
+        if(flip)
+        {
+            //glRotatef(90,0f,1f,0f);
+            glBegin(GL_QUADS);
+                glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
+                glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
+               glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
+               glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
+            glEnd();
+        }
+        else
+        {
+            glBegin(GL_QUADS);
+                glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
+                glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
+               glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
+               glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
+            glEnd();
+        }
     }
         
     public void changeSprite(float tx, float ty)
@@ -98,5 +112,22 @@ public class Object
     public boolean getToRemove()
     {
         return toRemove;
+    }
+    
+    public void moveUpdate()
+    {
+        xPos += velocity[0];
+        yPos += velocity[1];
+    }
+    
+    public void setVelocity(float vx, float vy)
+    {
+        velocity[0] = vx;
+        velocity[1] = vy;
+    }
+    
+    public float[] getVelocity()
+    {
+        return velocity;
     }
 }
