@@ -38,6 +38,8 @@ public class Main
     private Object bkgd;
     private Object GUIObj;
     
+    private long lastPressed = 0;
+    
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
     
@@ -180,13 +182,48 @@ public class Main
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
         {
             player.xPos += 4;
-            player.changeSprite(player.getSpriteX() + 32, 0);
+            long check = getTime();
+            check = check - lastPressed;
+            
+            if(check < 17)
+            {            
+                if(player.getSpriteX() == 0)
+                {
+                    player.changeSprite(32, 0);
+                }
+                else if(player.getSpriteX() == 32)
+                {
+                    player.changeSprite(64, 0);
+                }
+                else
+                {
+                    player.changeSprite(0, 0);
+                }         
+            }
+            lastPressed = getTime();
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
         {
+            long check2 = getTime();
+            check2 = check2 - lastPressed;
             player.xPos -= 4;
-            player.changeSprite(player.getSpriteX() + 32, 0);
+            if(check2 <17)
+            {
+                if(player.getSpriteX() == 64)
+                {
+                    player.changeSprite(32, 0);
+                }
+                else if(player.getSpriteX() == 32)
+                {
+                    player.changeSprite(0, 0);
+                }
+                else
+                {
+                    player.changeSprite(64, 0);
+                }
+            }
+            lastPressed = getTime();
         }
         
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
