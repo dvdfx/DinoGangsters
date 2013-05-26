@@ -18,19 +18,23 @@ public class Object
 {
     private Texture texture;
     private String imgLoc;
-    public float xPos, yPos, width, height;
+    public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
     
     public Object()
     {
         ;
     }
     
-    public void init(String iLoc, float x, float y, float w, float h)
+    public void init(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
     {
         xPos = x;
         yPos = y;
         width = w;
         height = h;
+        tOffX = tx;
+        tOffY = ty;
+        tOffW = tw;
+        tOffH = th;
         imgLoc = iLoc;
         System.out.println(imgLoc);
         try
@@ -41,20 +45,23 @@ public class Object
         {
             texture = null;
         }
+        texW = texture.getTextureWidth();
+        texH = texture.getTextureHeight();
     }
     
     public void render()
     {
+        texture.getTextureHeight();
         Color.white.bind();
         if(texture != null)
         {
             texture.bind();
         }
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f, 1.0f); glVertex2f(xPos, yPos);
-            glTexCoord2f(1.0f,1.0f); glVertex2f(xPos + width, yPos);
-            glTexCoord2f(1.0f,0.0f); glVertex2f(xPos + width, yPos + height);
-            glTexCoord2f(0.0f,0.0f); glVertex2f(xPos, yPos + height);
+            glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos);
+            glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos);
+            glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos + height);
+            glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos + height);
         glEnd();
     }
 }
