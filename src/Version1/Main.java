@@ -351,7 +351,7 @@ public class Main
         if(player.isShooting() && player.getLastFired() + 50 < getTime())
         {
             fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-            wObjs.add(new Bullet(player.xPos +60 , player.yPos +75, true, "Player"));
+            wObjs.add(new Bullet(player.xPos +60 , player.yPos +50, true, "Player"));
             player.incBurstShots(1);
             player.incShotsFired(1);
             player.setLastFired(getTime());
@@ -523,6 +523,7 @@ public class Main
                     if(((Police)wObjs.get(i)).deathTimer == 0)
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
+                        ((Police)wObjs.get(i)).yPos += 20;
                         if(rng.nextInt(10) < 3)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos, wObjs.get(i).yPos + wObjs.get(i).height, "Ammo"));
@@ -530,7 +531,6 @@ public class Main
                     }
                     ((Police)wObjs.get(i)).width =  64;
                     ((Police)wObjs.get(i)).height = 64;
-                    ((Police)wObjs.get(i)).yPos += 10;  //dont really like it, but works
                     ((Police)wObjs.get(i)).changeSprite(32, 64);
                     ((Police)wObjs.get(i)).deathTimer += 10;
                 }
