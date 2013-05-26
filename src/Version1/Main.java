@@ -399,8 +399,18 @@ public class Main
     {
         if((Mouse.isButtonDown(0))&&(clickedXPos > 340)&&(clickedXPos < 680)&&(clickedYPos < 210)&&(clickedYPos > 160))
         {
-            destroy();
+            inGameMusic.stop();
+            Display.destroy();
             create();
+            shoot = false;
+            menu = true;
+            gameOver = false;
+            reloadNeeded = false;
+            wObjs.clear();
+            score =0;
+            player = new Player(10, 10);
+            wObjs.add(player);
+            run();
         }        
     }
     
