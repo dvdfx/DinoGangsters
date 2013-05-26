@@ -32,8 +32,7 @@ public class Main
     boolean menu = true;
     int score =0;
     TrueTypeFont font;
-    private ArrayList<Object> bulletObjs = new ArrayList<Object>();
-    private ArrayList<Object> policeObjs = new ArrayList<Object>();
+    private ArrayList<Object> wObjs = new ArrayList<Object>();
     private Object testObj;
     private Object menuObj;
     private Object bkgd;
@@ -143,13 +142,9 @@ public class Main
             bkgd.render();
             //testObj.changeSprite(square2x1, square2y1);
             testObj.render();
-            for(int i = 0; i < bulletObjs.size(); i++)
+            for(int i = 0; i < wObjs.size(); i++)
             {
-                bulletObjs.get(i).render();
-            }
-            for(int j =0; j < policeObjs.size(); j++)
-            {
-                policeObjs.get(j).render();
+                wObjs.get(i).render();
             }
         
             displayScore();
@@ -186,20 +181,20 @@ public class Main
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
               shoot = true;
-              if(bulletObjs.size() > 0)
+              if(wObjs.size() > 0)
               {
-                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 80))
+                if(wObjs.get(wObjs.size()-1).xPos > (testObj.xPos + 80))
                 {
-                  Object shot = new Object();
+                  Bullet shot = new Bullet();
                   shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
-                  bulletObjs.add(shot);
+                  wObjs.add(shot);
                 }
               }
               else
               {
-                  Object shot = new Object();
+                  Bullet shot = new Bullet();
                   shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
-                  bulletObjs.add(shot);
+                  wObjs.add(shot);
               }
         }
     }
@@ -281,9 +276,12 @@ public class Main
     }
     public void bulletMove()
     {
-        for(int i = 0; i < bulletObjs.size(); i++)
+        for(int i = 0; i < wObjs.size(); i++)
         {
-            bulletObjs.get(i).xPos += 8;
+            if(wObjs.get(i).type.equals("Bullet"))
+            {
+                wObjs.get(i).xPos += 8;
+            }
         }
     }
     
@@ -299,7 +297,7 @@ public class Main
             
             Object police = new Object();
             police.init("resource/police.png", testObj.xPos+50+randX, 350+randY, 64, 128, 0, 0, 32, 64);
-            policeObjs.add(police);
+            wObjs.add(police);
         }
     }
     
@@ -319,22 +317,30 @@ public class Main
             }
         }*/
         
-        ListIterator bulletIter = bulletObjs.listIterator();
-        while(bulletIter.hasNext())
+        ListIterator firstIter = wObjs.listIterator();
+        while(firstIter.hasNext())
         {
-            Object bullet = (Object) bulletIter.next();
+            Object o1 = (Object) firstIter.next();
             
-            ListIterator policeIter = policeObjs.listIterator();
-            while(policeIter.hasNext())
+            ListIterator secondIter = wObjs.listIterator();
+            try
             {
-                Object police = (Object) policeIter.next();
-                if((bullet.xPos > police.xPos)&&(bullet.xPos < police.xPos+32)&&(bullet.yPos > police.yPos) &&(bullet.yPos < police.yPos+128))
+            while(secondIter.hasNext())
+            {
+                Object o2 = (Object) secondIter.next();
+                if(o1 != o2 && (o1.type.equals("Bullet") || o2.type.equals("Bullet")) && (o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos+32)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos+128))
                 {
-                    bulletIter.remove();
-                    policeIter.remove();
+                    firstIter.remove();
+                    secondIter.remove();
                     
                     score++;
+                    break;
                 }
+            }
+            }
+            catch (Exception e)
+            {
+                System.err.println(e);
             }
         }
         

@@ -16,13 +16,14 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Object
 {
+    protected String type;
     private Texture texture;
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
     
     public Object()
     {
-        ;
+        type = "Object";
     }
     
     public void init(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
