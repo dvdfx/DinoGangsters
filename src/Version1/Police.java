@@ -20,7 +20,7 @@ public class Police extends Object
     
     public Police(float x, float y, float w, float h)
     {
-        super("resource/popoSprite.png", x, y, w, h, 0, 0, 32, 64);
+        super("resource/popoSprite2.png", x, y, w, h, 0, 0, 32, 64);
         type = "Police";
     }
     
