@@ -64,4 +64,20 @@ public class Object
             glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
         glEnd();
     }
+    
+    public void changeSprite(float tx, float ty)
+    {
+        tOffX = tx;
+        tOffY = ty;
+    }
+    
+    public float getSpriteX()
+    {
+        return tOffX;
+    }
+    
+    public float getSpriteY()
+    {
+        return tOffY;
+    }
 }

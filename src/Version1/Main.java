@@ -63,7 +63,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
+        testObj.init("resource/rexSprite.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
         
         bkgd = new Object();
         bkgd.init("resource/street.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 40.0f, 380.0f, 200.0f);
@@ -122,6 +122,7 @@ public class Main
         glLoadIdentity();
         
         bkgd.render();
+        testObj.changeSprite(testObj.getSpriteX() + 32, testObj.getSpriteY());
         testObj.render();
         for(int i = 0; i < bulletObjs.size(); i++)
         {
