@@ -20,6 +20,7 @@ public class Main
     float square2y2  = 100;
     boolean shoot = false;
     private ArrayList<Object> bulletObjs = new ArrayList<Object>();
+    private ArrayList<Object> policeObjs = new ArrayList<Object>();
     private Object testObj;
     
     public static void main(String[] args)
@@ -45,7 +46,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rex2.png", 0.0f, 0.0f, 64.0f, 64.0f);
+        testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 32.0f, 64.0f);
 
         
         Mouse.setGrabbed(false);
@@ -102,6 +103,10 @@ public class Main
         {
             bulletObjs.get(i).render();
         }
+        for(int j =0; j < policeObjs.size(); j++)
+        {
+            policeObjs.get(j).render();
+        }
     }
     
     public void processMouse()
@@ -134,9 +139,21 @@ public class Main
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
               shoot = true;
-              Object shot = new Object();
-              shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +25, 4, 4);
-              bulletObjs.add(shot);
+              if(bulletObjs.size() > 0)
+              {
+                if(bulletObjs.get(bulletObjs.size()-1).xPos > (testObj.xPos + 200))
+                {
+                  Object shot = new Object();
+                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4);
+                  bulletObjs.add(shot);
+                }
+              }
+              else
+              {
+                  Object shot = new Object();
+                  shot.init("resource/bullet.png",testObj.xPos +25 , testObj.yPos +22, 4, 4);
+                  bulletObjs.add(shot);
+              }
         }
     }
     
@@ -159,6 +176,8 @@ public class Main
     {
         constrainPlayer();
         bulletMove();
+        addPoPo();
+        bulletCol();
     }
     
     public void constrainPlayer()
@@ -184,17 +203,38 @@ public class Main
     {
         for(int i = 0; i < bulletObjs.size(); i++)
         {
-            bulletObjs.get(i).xPos += 4;
+            bulletObjs.get(i).xPos += 1;
         }
     }
     
     public void addPoPo()
     {
         Random randomGenerator = new Random();
-        int chance = randomGenerator.nextInt(10);
-        
-        if(chance == 5)
+        int chance = randomGenerator.nextInt(1000);
+                
+        if(chance == 501)
         {
+            int randX = randomGenerator.nextInt(600);
+            int randY = randomGenerator.nextInt(100);
+            
+            Object police = new Object();
+            police.init("resource/police.png", testObj.xPos+randX, testObj.yPos+randY, 32, 64);
+            policeObjs.add(police);
         }
     }
+    
+    public void bulletCol()
+    {
+        for(int i=0; i<bulletObjs.size(); i++)
+        {
+            for(int j=0; j<policeObjs.size(); j++)
+            {
+                if((bulletObjs.get(i).xPos == policeObjs.get(j).xPos)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+64))
+                {
+                    policeObjs.get(j).xPos = 2000;
+                }
+            }
+        }
+    }
+    
 }
