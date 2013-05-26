@@ -81,7 +81,7 @@ public class Main
         
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
         
-        //GUIObj = new Object()
+        GUIObj = new Object("resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -148,6 +148,7 @@ public class Main
         else
         {
             bkgd.render();
+            GUIObj.render();
             //player.changeSprite(player.getSpriteX() + 32, 0);
             for(int i = 0; i < wObjs.size(); i++)
             {
