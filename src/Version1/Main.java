@@ -40,6 +40,7 @@ public class Main
     private Object bkgd;
     private Object GUIObj;
     private Object goverObj;
+    private Object mapScreen;
     
     private long lastPressed = 0;
     private long lastSwitch =0;
@@ -88,6 +89,8 @@ public class Main
         bkgd = new Object("resource/street2.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
         
         GUIObj = new Object("resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
+        
+        //mapScreen = new Object("resource/map.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 500.0f);
         
         goverObj = new Object("resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         
@@ -290,7 +293,7 @@ public class Main
         }
     }
     
-    public void run()            
+    public void run() throws LWJGLException, IOException            
     {
         boolean inMenu = false;
       while(!Display.isCloseRequested())
@@ -309,6 +312,12 @@ public class Main
                   startClicked();
                   render();
                   SoundStore.get().poll(0);
+              }
+              else if(gameOver == true)
+              {
+                  processMouse();
+                  retryClicked();
+                  render();
               }
               else
               {
@@ -381,6 +390,15 @@ public class Main
         {
            // System.out.println(clickedYPos);
         }
+    }
+    
+    public void retryClicked() throws LWJGLException, IOException
+    {
+        if((Mouse.isButtonDown(0))&&(clickedXPos > 340)&&(clickedXPos < 680)&&(clickedYPos < 210)&&(clickedYPos > 160))
+        {
+            destroy();
+            create();
+        }        
     }
     
     public void poShootYou()
