@@ -41,6 +41,7 @@ public class Main
     private int SCREEN_HEIGHT = 600;
     
     private Audio wavEffect;
+    private Audio fireSound;
     
     private long lastFrame;
     private int fps;
@@ -83,6 +84,7 @@ public class Main
         font = new TrueTypeFont(awtFont, false);
                     
         wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
+        fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -187,6 +189,7 @@ public class Main
                 if(wObjs.get(wObjs.size()-1).xPos > (testObj.xPos + 80))
                 {
                   Bullet shot = new Bullet();
+                  fireSound.playAsSoundEffect(1.0f, 1.0f, false);
                   shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
                   wObjs.add(shot);
                 }
@@ -194,6 +197,7 @@ public class Main
               else
               {
                   Bullet shot = new Bullet();
+                  fireSound.playAsSoundEffect(1.0f, 1.0f, false);
                   shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4);
                   wObjs.add(shot);
               }
@@ -202,22 +206,27 @@ public class Main
     
     public void run()            
     {
-      wavEffect.playAsSoundEffect(1.0f, 1.0f, true);
+        boolean inMenu = false;
       while(!Display.isCloseRequested())
       {
           if(Display.isVisible())
           {
               if(menu == true)
               {
+                  if(inMenu == false)
+                  {
+                    wavEffect.playAsSoundEffect(1.0f, 1.0f, true);
+                    inMenu = true;
+                  }
                   processMouse();
                   startClicked();
-                  playMusic();
                   render();
                   SoundStore.get().poll(0);
               }
               else
               {
-                  AL.destroy();
+                  wavEffect.stop();
+                  inMenu = false;
                   int delta = getDelta();
                   processKeyboard();
                   processMouse();
@@ -229,6 +238,7 @@ public class Main
           Display.sync(60);
       }
       Display.destroy();
+      AL.destroy();
     }
     
     public void update(int delta)
@@ -249,11 +259,6 @@ public class Main
         {
            // System.out.println(clickedYPos);
         }
-    }
-    
-    public void playMusic()
-    {
-        
     }
     
     public void constrainPlayer()
@@ -352,7 +357,7 @@ public class Main
         while(wObjsIter.hasNext())
         {
             Object obj = (Object) wObjsIter.next();
-            if(obj.getToRemove())
+            if(obj.getToRemove() || (obj.type.equals("Bullet") && obj.xPos > SCREEN_WIDTH + 20))
             {
                 wObjsIter.remove();
             }
