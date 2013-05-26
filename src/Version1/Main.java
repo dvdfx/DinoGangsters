@@ -467,7 +467,7 @@ public class Main
             int randX = randomGenerator.nextInt(600);
             int randY = randomGenerator.nextInt(120);
             
-            wObjs.add(new Police(player.xPos+80+randX, 350+randY, 64, 128));
+            wObjs.add(new Police(980, 350+randY, 64, 128));
         }
     }
     
