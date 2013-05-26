@@ -1,6 +1,7 @@
 
 package Version1;
 import java.util.*;
+import java.util.Random;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -18,7 +19,7 @@ public class Main
     float square2x2 = 100;
     float square2y2  = 100;
     boolean shoot = false;
-    private ArrayList<Object> wObjs = new ArrayList<Object>();
+    private ArrayList<Object> bulletObjs = new ArrayList<Object>();
     private Object testObj;
     
     public static void main(String[] args)
@@ -44,7 +45,7 @@ public class Main
         
         //wObjs.add(new Object());
         testObj = new Object();
-        testObj.init("resource/rex.png", 0.0f, 0.0f, 64.0f, 64.0f);
+        testObj.init("resource/rex2.png", 0.0f, 0.0f, 64.0f, 64.0f);
 
         
         Mouse.setGrabbed(false);
@@ -97,9 +98,9 @@ public class Main
         glLoadIdentity();
         
         testObj.render();
-        for(int i = 0; i < wObjs.size(); i++)
+        for(int i = 0; i < bulletObjs.size(); i++)
         {
-            wObjs.get(i).render();
+            bulletObjs.get(i).render();
         }
     }
     
@@ -130,12 +131,12 @@ public class Main
         {
             testObj.yPos -= 1;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))// && shoot == false)
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
               shoot = true;
               Object shot = new Object();
-              shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +40, 4, 4);
-              wObjs.add(shot);
+              shot.init("resource/bullet.png",testObj.xPos +50 , testObj.yPos +25, 4, 4);
+              bulletObjs.add(shot);
         }
     }
     
@@ -181,9 +182,19 @@ public class Main
     }
     public void bulletMove()
     {
-        for(int i = 0; i < wObjs.size(); i++)
+        for(int i = 0; i < bulletObjs.size(); i++)
         {
-            wObjs.get(i).xPos += 5;
+            bulletObjs.get(i).xPos += 4;
+        }
+    }
+    
+    public void addPoPo()
+    {
+        Random randomGenerator = new Random();
+        int chance = randomGenerator.nextInt(10);
+        
+        if(chance == 5)
+        {
         }
     }
 }
