@@ -70,7 +70,7 @@ public class Main
         lastFPS = getTime();
         
         menuObj = new Object();
-        menuObj.init("resource/ammo.png", 50.0f, 80.0f, 916f, 520f, 0.0f, 0.0f, 16f, 16f);
+        menuObj.init("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
         testObj = new Object();
         testObj.init("resource/rexWithTGun2.png", 0.0f, 0.0f, 64.0f, 128.0f, 0.0f, 0.0f, 32.0f, 64.0f);
@@ -241,13 +241,13 @@ public class Main
     
     public void startClicked()
     {
-        if((Mouse.isButtonDown(0))&&(clickedXPos > 350)&&(clickedXPos < 650 ))
+        if((Mouse.isButtonDown(0))&&(clickedXPos > 270)&&(clickedXPos < 765)&&(clickedYPos < 225)&&(clickedYPos > 150))
         {
             menu = false;
         }
         else if(Mouse.isButtonDown(0))
         {
-            System.out.println(clickedXPos);
+           // System.out.println(clickedYPos);
         }
     }
     
