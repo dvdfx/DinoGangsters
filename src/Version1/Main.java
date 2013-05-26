@@ -40,6 +40,7 @@ public class Main
     private Object GUIObj;
     
     private long lastPressed = 0;
+    private long lastSwitch =0;
     
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
@@ -397,6 +398,24 @@ public class Main
                     if(wObjs.get(i).xPos - player.xPos > 0)    
                     {
                         wObjs.get(i).xPos -= 1;
+                        long check = getTime();
+                        check = check - lastSwitch;
+                                              
+                        if(check > 17)
+                        {
+                            if(wObjs.get(i).getSpriteX() == 0)
+                            {
+                                wObjs.get(i).changeSprite(32, 0);
+                            }
+                            else if(wObjs.get(i).getSpriteX() == 32)
+                            {
+                                wObjs.get(i).changeSprite(64, 0);
+                            }
+                            else
+                            {
+                                wObjs.get(i).changeSprite(0, 0);
+                            }
+                        }
                     }
                     else
                     {
@@ -412,6 +431,7 @@ public class Main
                         wObjs.get(i).yPos +=1;
                     }
                 }
+                lastSwitch = getTime();
             }
         }
     }
@@ -613,6 +633,7 @@ public class Main
         font.drawString(20, 5, "Score: "+score, Color.green);
         font.drawString(280, 5, "Health: "+player.health, Color.green);
         font.drawString(540, 5, "Weapon: Tommy", Color.green);
+        font.drawString(800, 5, "Ammo: 12", Color.green);
     }
     
     public int getDelta()
