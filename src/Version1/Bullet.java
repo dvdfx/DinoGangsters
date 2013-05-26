@@ -15,10 +15,13 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Bullet extends Object
 {
-    public Bullet(float x, float y, boolean right)
+    private String source;
+    
+    public Bullet(float x, float y, boolean right, String src)
     {
         super("resource/bullet.png", x, y, 8, 8, 0, 0, 4, 4);
         type = "Bullet";
+        source = src;
         if(right)
         {
             velocity[0] = 8;
@@ -27,5 +30,10 @@ public class Bullet extends Object
         {
             velocity[0] = -8;
         }
+    }
+    
+    public String getSource()
+    {
+        return source;
     }
 }
