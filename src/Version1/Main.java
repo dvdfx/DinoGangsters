@@ -25,6 +25,7 @@ public class Main
     boolean shoot = false;
     int score =0;
     TrueTypeFont font;
+    private ArrayList<Object> wObjs = new ArrayList<Object>();
     private ArrayList<Object> bulletObjs = new ArrayList<Object>();
     private ArrayList<Object> policeObjs = new ArrayList<Object>();
     private Object testObj;
@@ -87,6 +88,7 @@ public class Main
         {
             Display.setDisplayMode(new DisplayMode(width,height));
             Display.create();
+            Display.setTitle("Dino-hibition");
             //Display.setVSyncEnabled(true);
 	}
         catch (LWJGLException e)
@@ -204,7 +206,7 @@ public class Main
         constrainPlayer();
         bulletMove();
         addPoPo();
-        bulletCol();
+        colis();
     }
     
     public void constrainPlayer()
@@ -250,27 +252,46 @@ public class Main
         }
     }
     
-    public void bulletCol()
+    public void colis()
     {
+        /*wObjs.addAll(bulletObjs);
+        wObjs.addAll(policeObjs);
         for(int i=0; i<bulletObjs.size(); i++)
         {
             for(int j=0; j<policeObjs.size(); j++)
             {
                 if((bulletObjs.get(i).xPos > policeObjs.get(j).xPos)&&(bulletObjs.get(i).xPos < policeObjs.get(j).xPos+32)&&(bulletObjs.get(i).yPos > policeObjs.get(j).yPos) &&(bulletObjs.get(i).yPos < policeObjs.get(j).yPos+128))
                 {
-                    policeObjs.get(j).xPos = 2000;
+                    policeObjs.remove(j);
+                    bulletObjs.remove(i);
+                    score++;
+                }
+            }
+        }*/
+        ListIterator bulletIter = bulletObjs.listIterator();
+        while(bulletIter.hasNext())
+        {
+            Object bullet = (Object) bulletIter.next();
+            
+            ListIterator policeIter = policeObjs.listIterator();
+            while(policeIter.hasNext())
+            {
+                Object police = (Object) policeIter.next();
+                if((bullet.xPos > police.xPos)&&(bullet.xPos < police.xPos+32)&&(bullet.yPos > police.yPos) &&(bullet.yPos < police.yPos+128))
+                {
+                    bulletIter.remove();
+                    policeIter.remove();
                     score++;
                 }
             }
         }
-        
-        for(int i=0; i<bulletObjs.size(); i++)
+        /*ListIterator wObjIter = wObjs.listIterator();
+        while(wObjIter.hasNext())
         {
-          if(bulletObjs.get(i).xPos > 400)
-          {
-              //bulletObjs.get(i) = null;
-          }
+            Object element = (Object) wObjIter.next();
+            wObjIter.remove();
         }
+        wObjs.clear();*/
     }
     
     public void displayScore()
