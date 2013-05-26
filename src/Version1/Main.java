@@ -200,13 +200,13 @@ public class Main
                 if(wObjs.get(wObjs.size()-1).xPos > (testObj.xPos + 80))
                 {
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4));
+                  wObjs.add(new Bullet(testObj.xPos +50 , testObj.yPos +75, true));
                 }
               }
               else
               {
                   fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-                  wObjs.add(new Bullet("resource/bullet.png",testObj.xPos +50 , testObj.yPos +75, 8, 8, 0, 0, 4, 4));
+                  wObjs.add(new Bullet(testObj.xPos +50 , testObj.yPos +75, true));
               }
         }
     }
@@ -285,7 +285,7 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).shotLimit < 3)
                 {
-                    wObjs.add(new Bullet("resource/bullet.png",wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, 8, 8, 0, 0, 4, 4));
+                    wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false));
                     ((Police)wObjs.get(i)).shotLimit++;           
                 }
             }

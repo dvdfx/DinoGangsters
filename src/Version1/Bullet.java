@@ -15,9 +15,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Bullet extends Object
 {
-    public Bullet(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
+    public Bullet(float x, float y, boolean right)
     {
-        super(iLoc, x, y, w, h, tx, ty, tw, th);
+        super("resource/bullet.png", x, y, 8, 8, 0, 0, 4, 4);
         type = "Bullet";
     }
 }
