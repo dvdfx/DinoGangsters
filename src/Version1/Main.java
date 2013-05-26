@@ -112,6 +112,7 @@ public class Main
         {
             Display.setDisplayMode(new DisplayMode(width,height));
             Display.create();
+            Display.setTitle("Dinohibition");
             //Display.setVSyncEnabled(true);
 	}
         catch (LWJGLException e)
@@ -320,7 +321,7 @@ public class Main
         if(player.isShooting() && player.getLastFired() + 50 < getTime())
         {
             fireSound.playAsSoundEffect(1.0f, 1.0f, false);
-            wObjs.add(new Bullet(player.xPos +60 , player.yPos +75, true));
+            wObjs.add(new Bullet(player.xPos +60 , player.yPos +75, true, "Player"));
             player.incBurstShots(1);
             player.incShotsFired(1);
             player.setLastFired(getTime());
@@ -365,7 +366,7 @@ public class Main
             {
                 if(((Police)wObjs.get(i)).shotLimit < 3)
                 {
-                    wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false));
+                    wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false, "Police"));
                     ((Police)wObjs.get(i)).shotLimit++;                                           
                 }
             }
@@ -507,10 +508,9 @@ public class Main
                 {
                     if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos + o2.width)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos + o2.height))
                     {
-                        //System.err.println("COLLISION!");
                         if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != player && o2 != player))
                         {
-                            if(o1.type.equals("Police"))
+                            if(o1.type.equals("Police") && ((Bullet)o2).getSource().equals("Player"))
                             {
                                 if(((Police)o1).health >10)
                                 {
@@ -520,7 +520,7 @@ public class Main
                             }
                             else
                             {
-                                if(o2.type.equals("Police"))
+                                if(o2.type.equals("Police") && ((Bullet)o1).getSource().equals("Player"))
                                 {
                                     if(((Police)o2).health >10)
                                     {
@@ -529,7 +529,7 @@ public class Main
                                 }
                             }
                             
-                            if(o2.type.equals("Police"))
+                            if(o2.type.equals("Police") && ((Bullet)o1).getSource().equals("Player"))
                             {
                                 if(((Police)o2).health >10)
                                 {
@@ -539,7 +539,7 @@ public class Main
                             }
                             else
                             {
-                                if(o1.type.equals("Police"))
+                                if(o1.type.equals("Police") && ((Bullet)o2).getSource().equals("Player"))
                                 {
                                     if(((Police)o1).health >10)
                                     {
