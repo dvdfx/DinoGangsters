@@ -21,6 +21,7 @@ public class Object
     public Texture texture; //should be private?
     private String imgLoc;
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
+    public boolean flip = false;
     
     public Object()
     {
@@ -59,12 +60,25 @@ public class Object
         {
             texture.bind();
         }
-        glBegin(GL_QUADS);
-            glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
-            glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
-            glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
-        glEnd();
+        if(flip)
+        {
+            //glRotatef(90,0f,1f,0f);
+            glBegin(GL_QUADS);
+                glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
+                glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
+               glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
+               glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
+            glEnd();
+        }
+        else
+        {
+            glBegin(GL_QUADS);
+                glTexCoord2f(tOffX / texW, tOffY / texH); glVertex2f(xPos, yPos);
+                glTexCoord2f((tOffX + tOffW) / texW, tOffY / texH); glVertex2f(xPos + width, yPos);
+               glTexCoord2f((tOffX + tOffW) / texW, (tOffY + tOffH) / texH); glVertex2f(xPos + width, yPos + height);
+               glTexCoord2f(tOffX / texW, (tOffY + tOffH) / texH); glVertex2f(xPos, yPos + height);
+            glEnd();
+        }
     }
         
     public void changeSprite(float tx, float ty)

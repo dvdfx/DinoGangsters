@@ -158,7 +158,7 @@ public class Main
                     }
                     else
                     {
-                        wObjs.get(i).changeSprite(0, 0);
+                        //wObjs.get(i).changeSprite(0, 0);
                     }
                 }
                 wObjs.get(i).render();
@@ -267,6 +267,7 @@ public class Main
         bulletMove();
         addPoPo();
         bulletCol();
+        playDeath();
     }
     
     public void startClicked()
@@ -307,6 +308,26 @@ public class Main
             if(wObjs.get(i).type.equals("Bullet"))
             {
                 wObjs.get(i).xPos += 8;
+            }
+        }
+    }
+    
+    public void playDeath()
+    {
+        for(int i=0;i<wObjs.size(); i++)
+        {
+            if(wObjs.get(i).type.equals("Police"))
+            {
+                if(((Police)wObjs.get(i)).health < 10)
+                {
+                    ((Police)wObjs.get(i)).changeSprite(64, 64);
+                    wObjs.get(i).flip = true;
+                    ((Police)wObjs.get(i)).deathTimer -= 10;
+                    if(((Police)wObjs.get(i)).deathTimer <0)
+                    {
+                        ((Police)wObjs.get(i)).changeSprite(0, 0);
+                    }
+                }
             }
         }
     }
@@ -396,8 +417,11 @@ public class Main
             {
                 if(((Police)obj).getHealth() < 10)
                 {
-                   obj.setToRemove(true);
-                   score++;
+                    if(((Police)obj).deathTimer < 0)
+                    {
+                        obj.setToRemove(true);
+                        score++;
+                    }
                 }
             }
         }
