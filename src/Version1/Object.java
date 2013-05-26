@@ -126,6 +126,16 @@ public class Object
         velocity[1] = vy;
     }
     
+    public void setXVel(float vx)
+    {
+        velocity[0] = vx;
+    }
+    
+    public void setYVel(float vy)
+    {
+        velocity[1] = vy;
+    }
+    
     public float[] getVelocity()
     {
         return velocity;
