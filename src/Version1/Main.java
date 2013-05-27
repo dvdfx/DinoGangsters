@@ -155,11 +155,11 @@ public class Main
         
         menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        player = new Player(120, 120);
+        player = new Player(240, 240);
         wObjs.add(player);
         
         bkgd = new Object("src/resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
-        bar = new Bar(1540, 300);
+        bar = new Bar(-4, 96);
         wObjs.add(bar);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
@@ -949,7 +949,7 @@ public class Main
                             {
                                 pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             }
-                            time += ((5 + rng.nextInt(10)) * player.beerCount);
+                            time += ((5 + rng.nextInt(15)) * player.beerCount);
                             player.beerCount = 0;
                         }
                         
