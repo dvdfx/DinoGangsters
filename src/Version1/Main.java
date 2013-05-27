@@ -106,7 +106,7 @@ public class Main
         player = new Player(10, 10);
         wObjs.add(player);
         
-        bkgd = new Object("src/resource/street3.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 420.0f, 280.0f);
+        bkgd = new Object("src/resource/street3.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 440.0f, 300.0f);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -586,7 +586,7 @@ public class Main
                 }
                 lastSwitch = getTime();
             }
-            else if(wObjs.get(i).type.equals("Ammo"))
+            else if(wObjs.get(i).type.equals("Ammo") || wObjs.get(i).type.equals("Beer") || wObjs.get(i).type.equals("Steak"))
             {
                 if(wObjs.get(i).getLastSpriteUpdate() + 80 < getTime())
                 {
@@ -630,11 +630,15 @@ public class Main
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
                         ((Police)wObjs.get(i)).yPos += 20;
-                        if(rng.nextInt(10) < 5)
+                        if(rng.nextInt(10) < 4)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Ammo"));
                         }
-                        if(rng.nextInt(10) > 5)
+                        if(rng.nextInt(10) < 4)
+                        {
+                           wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Steak"));
+                        }
+                        if(rng.nextInt(10) < 4)
                         {
                            wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Beer"));
                         }
@@ -774,6 +778,50 @@ public class Main
                         {
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             player.addTotalAmmo(rng.nextInt(3) * 12);
+                            o1.setToRemove(true);
+                        }
+                        
+                        if(o1.type.equals("Player") && o2.type.equals("Steak"))
+                        {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            int healthAdd = 10 + rng.nextInt(20);
+                            if((healthAdd + player.health) >= 100)
+                            {
+                                player.health = 100;
+                            }
+                            else
+                            {
+                                player.health += healthAdd;
+                            }
+                            o2.setToRemove(true);
+                        }
+                        
+                        if(o2.type.equals("Player") && o1.type.equals("Steak"))
+                        {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            int healthAdd = 10 + rng.nextInt(20);
+                            if((healthAdd + player.health) >= 100)
+                            {
+                                player.health = 100;
+                            }
+                            else
+                            {
+                                player.health += healthAdd;
+                            }
+                            o1.setToRemove(true);
+                        }
+                        
+                        if(o1.type.equals("Player") && o2.type.equals("Beer"))
+                        {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            //player.addTotalAmmo(rng.nextInt(3) * 12);
+                            o2.setToRemove(true);
+                        }
+                        
+                        if(o2.type.equals("Player") && o1.type.equals("Beer"))
+                        {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            //.addTotalAmmo(rng.nextInt(3) * 12);
                             o1.setToRemove(true);
                         }
                     }
