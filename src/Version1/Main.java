@@ -108,8 +108,14 @@ public class Main
         }
         else
         {
-            System.out.println(scoreArray[0][0]);
-            System.out.println(scoreArray[1][0]);
+            for(int i=0; i <10; i++)
+            {
+                if(scoreArray[0][i] != null)
+                {
+                    System.out.print(scoreArray[0][i]);
+                    System.out.println(scoreArray[1][i]);
+                }
+            }
         }
         
         menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
