@@ -205,8 +205,47 @@ public class Main
              
     }
     
+    public void menuKeyboard()
+    {
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        {
+            System.exit(0);
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
+        {
+            menu = false;
+        }
+    }
+    
+    public void gameOverKeyboard() throws LWJGLException, IOException
+    {
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        {
+            System.exit(0);
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
+        {
+            inGameMusic.stop();
+            Display.destroy();
+            create();
+            shoot = false;
+            menu = true;
+            gameOver = false;
+            reloadNeeded = false;
+            wObjs.clear();
+            score =0;
+            player = new Player(10, 10);
+            wObjs.add(player);
+            run();
+        }
+    }
+    
     public void processKeyboard()
     {
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        {
+            System.exit(0);
+        }
         if(Keyboard.isKeyDown(Keyboard.KEY_D))
         {
             player.setXVel(4);
@@ -338,6 +377,7 @@ public class Main
                     inMenu = true;
                   }
                   processMouse();
+                  menuKeyboard();
                   startClicked();
                   render();
                   SoundStore.get().poll(0);
@@ -345,6 +385,7 @@ public class Main
               else if(gameOver == true)
               {
                   processMouse();
+                  gameOverKeyboard();
                   retryClicked();
                   render();
                   gameOverScore();
@@ -745,7 +786,7 @@ public class Main
                     if(((Police)obj).deathTimer > 1000)
                     {
                         obj.setToRemove(true);
-                        score++;
+                        score += 10;
                     }
                 }
             }
