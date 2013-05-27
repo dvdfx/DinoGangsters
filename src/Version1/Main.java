@@ -13,6 +13,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.*;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -53,6 +56,8 @@ public class Main
     private Object GUIObj;
     private Object goverObj;
     private Object mapScreen;
+    
+    private Controller controller;
     
     private long lastPressed = 0;
     private long lastSwitch = 0;
@@ -115,6 +120,13 @@ public class Main
         timer = new Timer(1000, taskPerformer);
         timer.setInitialDelay(0);
         
+        //for (Controller c : ControllerEnvironment.getDefaultEnvironment().getControllers()) {
+        //    if (c.getType() == Controller.Type.GAMEPAD) {
+        //        controller = c;
+        //        break;
+        //    }
+        //}
+        
         scoreArray = readFromFile("scores.rraw");
         if(scoreArray == null)
         {
@@ -139,7 +151,7 @@ public class Main
         player = new Player(10, 10);
         wObjs.add(player);
         
-        bkgd = new Object("src/resource/street3.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 220.0f, 0.0f, 440.0f, 300.0f);
+        bkgd = new Object("src/resource/street4.png", 0.0f, 0.0f, 1682, SCREEN_HEIGHT, 0.0f, 0.0f, 841.0f, 300.0f);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -207,22 +219,33 @@ public class Main
     }
     
     public void render()
-    {
+    {        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glLoadIdentity();
-        
         if(menu == true)
         {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
             menuObj.render();
         }
         else if (gameOver == true)
         {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
             goverObj.render();
         }
         else
         {
+            float camX = player.xPos;
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(camX, camX + SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
+            
             bkgd.render();
-            GUIObj.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
                 if(wObjs.get(i).type.equals("Police"))
@@ -239,8 +262,9 @@ public class Main
                 }
                 wObjs.get(i).render();
             }
-        
-            displayScore();
+            GUIObj.xPos = camX;
+            GUIObj.render();
+            displayScore(camX);        
         }
     }
     
@@ -291,6 +315,11 @@ public class Main
     
     public void processKeyboard()
     {
+        //if(controller != null)
+        //{
+        //    controller.poll();
+        //}
+        
         if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
             destroy();
@@ -910,12 +939,12 @@ public class Main
         }
     }
     
-    public void displayScore()
+    public void displayScore(float offset)
     {
-        font.drawString(20, 5, "Score: "+score, Color.green);
-        font.drawString(280, 5, "Health: "+player.health, Color.green);
-        font.drawString(540, 5, "Time: "+time, Color.green);
-        font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired())+"/"+player.getTotalAmmo(), Color.green);
+        font.drawString(20 + offset, 5, "Score: "+score, Color.green);
+        font.drawString(280 + offset, 5, "Health: "+player.health, Color.green);
+        font.drawString(540 + offset, 5, "Time: "+time, Color.green);
+        font.drawString(800 + offset, 5, "Ammo: "+(player.shotLimit - player.getShotsFired())+"/"+player.getTotalAmmo(), Color.green);
     }
     
     
