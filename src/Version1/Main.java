@@ -301,7 +301,7 @@ public class Main
             }
             else if(player.getTotalAmmo() > 0)
             {
-                if(getTime() > (reloadTime +2000))
+                if(getTime() > (reloadTime +3000))
                 {
                    if(pressed == false)
                    {
@@ -312,8 +312,11 @@ public class Main
                     player.setShotsFired(0);
                     reloadTime = getTime();
                 }
+<<<<<<< HEAD
                 player.addTotalAmmo(-(player.getShotsFired()));
                 player.setShotsFired(0);
+=======
+>>>>>>> ammo ommma
             }
         }
         else
