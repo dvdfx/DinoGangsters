@@ -19,6 +19,7 @@ public class Player extends Object
     private int burstShots = 0;
     private int shotsFired = 0;
     private long lastFired = 0;
+    int beerCount = 0;
     
     public Player(float x, float y)
     {

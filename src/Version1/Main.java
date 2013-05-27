@@ -281,7 +281,12 @@ public class Main
             
             GUIObj.xPos = camX;
             GUIObj.render();
-            displayScore(camX);        
+            displayScore(camX);
+            for(int i = 0; i < player.beerCount; i++)
+            {
+                BeerIcon beerIcon = new BeerIcon(camX + i * 12, SCREEN_HEIGHT - 42);
+                beerIcon.render();
+            }
         }
     }
     
@@ -303,6 +308,7 @@ public class Main
         {
             timer.start();
             menu = false;
+            startTime = getTime();
         }
     }
     
@@ -590,6 +596,7 @@ public class Main
         {
             menu = false;
             timer.start();
+            startTime = getTime();
         }
     }
     
@@ -758,13 +765,12 @@ public class Main
     
     public void addPoPo()
     {
-        Random randomGenerator = new Random();
-        int chance = randomGenerator.nextInt(150);
+        int chance = rng.nextInt(150);
                 
         if(chance == 75)
         {
-            int randY = randomGenerator.nextInt(120);
-            wObjs.add(new Police(player.xPos+1000, 350+randY));
+            int randY = rng.nextInt(120);
+            wObjs.add(new Police(camX + SCREEN_WIDTH, 350+randY));
         }
     }
     
@@ -918,14 +924,14 @@ public class Main
                         if(o1.type.equals("Player") && o2.type.equals("Beer"))
                         {
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
-                            //player.addTotalAmmo(rng.nextInt(3) * 12);
+                            player.beerCount++;
                             o2.setToRemove(true);
                         }
                         
                         if(o2.type.equals("Player") && o1.type.equals("Beer"))
                         {
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
-                            //.addTotalAmmo(rng.nextInt(3) * 12);
+                            player.beerCount++;
                             o1.setToRemove(true);
                         }
                     }
