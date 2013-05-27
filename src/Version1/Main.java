@@ -57,6 +57,8 @@ public class Main
     private Object bkgd;
     private Object GUIObj;
     private Object goverObj;
+    private Object winScreen;
+    private Object hsScreen;
     private Object mapScreen;
     
     private float camX = 0;
@@ -162,6 +164,8 @@ public class Main
         //mapScreen = new Object("src/resource/map.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 500.0f);
         
         goverObj = new Object("src/resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        winScreen = new Object("src/resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        hsScreen = new Object("src/resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
