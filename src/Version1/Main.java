@@ -453,7 +453,7 @@ public class Main
             {
                 if((getTime() > ((Police)wObjs.get(i)).shotRate + 2000) && ((Police)wObjs.get(i)).shotLimit < 3)
                 {
-                    wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false, "Police"));
+                    wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +50, false, "Police"));
                     ((Police)wObjs.get(i)).shotLimit++;
                     ((Police)wObjs.get(i)).shotRate = getTime();
                 }
@@ -554,6 +554,7 @@ public class Main
     
     public void playDeath()
     {
+        Random randomGenerator = new Random();
         for(int i=0;i<wObjs.size(); i++)
         {
             if(wObjs.get(i).type.equals("Police"))
@@ -567,6 +568,10 @@ public class Main
                         if(rng.nextInt(10) < 5)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Ammo"));
+                        }
+                        if(rng.nextInt(10) > 5)
+                        {
+                           wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Beer"));
                         }
                     }
                     ((Police)wObjs.get(i)).width =  64;
