@@ -862,6 +862,8 @@ public class Main
         }
     }
     
+    
+    
     public void writeToFile(ArrayList<String> data, String fileName)
     {
         try 
