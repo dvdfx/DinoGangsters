@@ -55,6 +55,7 @@ public class Main
     private Player player;
     private Object menuObj;
     private Object bkgd;
+    private Bar bar;
     private Object GUIObj;
     private Object goverObj;
     private Object winScreen;
@@ -158,6 +159,7 @@ public class Main
         wObjs.add(player);
         
         bkgd = new Object("src/resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
+        bar = new Bar(1540, 300);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -262,6 +264,7 @@ public class Main
             glMatrixMode(GL_MODELVIEW);
             
             bkgd.render();
+            bar.render();
             for(int i = 0; i < wObjs.size(); i++)
             {
                 if(wObjs.get(i).type.equals("Police"))
