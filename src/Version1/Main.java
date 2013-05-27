@@ -46,6 +46,7 @@ public class Main
     boolean reloadNeeded = false;
     boolean pressed = false;
     boolean askOnce = true;
+    boolean writeFile = true;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -306,6 +307,7 @@ public class Main
             reloadNeeded = false;
             wObjs.clear();
             score =0;
+            askOnce = true;
             time = 150;
             player = new Player(10, 10);
             wObjs.add(player);
@@ -580,6 +582,7 @@ public class Main
             reloadNeeded = false;
             wObjs.clear();
             score =0;
+            askOnce = true;
             time =150;
             player = new Player(10, 10);
             wObjs.add(player);
@@ -956,8 +959,13 @@ public class Main
     
     public void nameEnter() throws FileNotFoundException
     {
-        int index = 0;
         name = (String)JOptionPane.showInputDialog(null,"What is your name?");
+        checkHighScore();
+    }
+    
+    public void checkHighScore()
+    {
+        int index = 0;
         for(int i =0; i<10; i++)
         {
             if(scoreArray[0][i] == null)
@@ -965,10 +973,36 @@ public class Main
                 index = i;
                 break;
             }
+            else
+            {
+                writeFile = false;
+            }
         }
-        scoreArray[0][index] = name;
-        scoreArray[1][index] = Integer.toString(score);
-        writeToFile(scoreArray,"scores.rraw");
+        if(writeFile)
+        {
+            scoreArray[0][index] = name;
+            scoreArray[1][index] = Integer.toString(score);
+            writeToFile(scoreArray,"scores.rraw");
+        }
+        else
+        {
+            int temp = 1000;
+            int index2 = 11;
+            for(int j=0; j<10; j++)
+            {
+                if((score > Integer.parseInt(scoreArray[1][j])) && (Integer.parseInt(scoreArray[1][j]) < temp))
+                {
+                    temp = Integer.parseInt(scoreArray[1][j]);
+                    index2 = j;
+                }
+            }
+            
+            scoreArray[0][index2] = name;
+            scoreArray[1][index2] = Integer.toString(score);
+            writeToFile(scoreArray,"scores.rraw");
+        }
+        writeFile = true;
+        
     }
     
     public String[][] readFromFile(String fileName)

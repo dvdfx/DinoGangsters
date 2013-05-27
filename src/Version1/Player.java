@@ -82,7 +82,7 @@ public class Player extends Object
     }
     public void takeDamage()
     {
-        this.health -= 5;
+        this.health -= 50;
     }
     public int getTotalAmmo()
     {
