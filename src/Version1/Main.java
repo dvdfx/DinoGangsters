@@ -777,7 +777,6 @@ public class Main
     
     public void playDeath()
     {
-        Random randomGenerator = new Random();
         for(int i=0;i<wObjs.size(); i++)
         {
             if(wObjs.get(i).type.equals("Police"))

@@ -12,7 +12,7 @@ public class Loot extends Object
 {
     public Loot(float x, float y, String t)
     {
-        super("src/resource/" + t.toLowerCase() + ".png", x, y, 32, 32, 0, 0, 32, 32);
+        super("resource/" + t.toLowerCase() + ".png", x, y, 32, 32, 0, 0, 32, 32);
         type = t;
     }
 }

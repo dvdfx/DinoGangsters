@@ -12,7 +12,7 @@ public class BeerIcon extends Object
 {
     public BeerIcon(float x, float y)
     {
-        super("src/resource/beer.png", x, y, 32, 32, 0, 0, 32, 32);
+        super("resource/beer.png", x, y, 32, 32, 0, 0, 32, 32);
         type = "BeerIcon";
     }
 }
