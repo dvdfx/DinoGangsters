@@ -137,7 +137,7 @@ public class Main
         //    }
         //}
         
-        scoreArray = readFromFile("scores.rraw");
+        //scoreArray = readFromFile("scores.rraw");
         if(scoreArray == null)
         {
             scoreArray = new String[2][10];
@@ -156,34 +156,34 @@ public class Main
         
         startTime = (int)getTime()/1000;
         
-        menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
+        menuObj = new Object("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
         player = new Player(240, 240);
         wObjs.add(player);
         
-        bkgd = new Object("src/resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
+        bkgd = new Object("resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
         bar = new Bar(-4, 96);
         wObjs.add(bar);
         
-        GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
+        GUIObj = new Object("resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
-        //mapScreen = new Object("src/resource/map.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 500.0f);
+        //mapScreen = new Object("resource/map.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 500.0f);
         
-        goverObj = new Object("src/resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
-        winScreen = new Object("src/resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
-        hsScreen = new Object("src/resource/highScores.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        goverObj = new Object("resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        winScreen = new Object("resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        hsScreen = new Object("resource/highScores.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
                     
-        menuMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/menu3.wav"));
-        inGameMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/ingame1.wav"));
-        fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/shoot.wav"));
-        roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/roar.wav"));
-        hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/hit.wav"));
-        reloadSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/reload.wav"));
-        gameOverSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/gameover.wav"));
-        pickupSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/resource/pickup.wav"));
+        menuMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/menu3.wav"));
+        inGameMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/ingame1.wav"));
+        fireSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/shoot.wav"));
+        roarSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/roar.wav"));
+        hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/hit.wav"));
+        reloadSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/reload.wav"));
+        gameOverSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/gameover.wav"));
+        pickupSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/pickup.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        

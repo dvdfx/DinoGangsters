@@ -12,7 +12,7 @@ public class Bar extends Object
 {
     public Bar(float x, float y)
     {
-        super("src/resource/bar3.png", x, y, 142, 512, 0, 0, 86, 256);
+        super("resource/bar3.png", x, y, 142, 512, 0, 0, 86, 256);
         type = "Bar";
     }
 }
