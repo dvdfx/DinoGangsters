@@ -58,6 +58,7 @@ public class Main
     private Audio hitSound;
     private Audio reloadSound;
     private Audio gameOverSound;
+    private Audio pickupSound;
     private Audio inGameMusic;
     
     private long lastFrame;
@@ -110,6 +111,7 @@ public class Main
         hitSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/hit.wav"));
         reloadSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/reload.wav"));
         gameOverSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/gameover.wav"));
+        pickupSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("resource/pickup.wav"));
         
         Mouse.setGrabbed(false);
         Mouse.create();        
@@ -700,12 +702,14 @@ public class Main
                         
                         if(o1.type.equals("Player") && o2.type.equals("Ammo"))
                         {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             player.addTotalAmmo(rng.nextInt(3) * 12);
                             o2.setToRemove(true);
                         }
                         
                         if(o2.type.equals("Player") && o1.type.equals("Ammo"))
                         {
+                            pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             player.addTotalAmmo(rng.nextInt(3) * 12);
                             o1.setToRemove(true);
                         }
