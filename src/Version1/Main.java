@@ -293,14 +293,10 @@ public class Main
         {
             if(reloadNeeded && player.getTotalAmmo() > 0)
             {
-                if(getTime() < reloadTime)
-                {
-                    
-                }
-                    reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
-                    player.setShotsFired(0);
-                    player.setTotalAmmo(-12);
-                    reloadNeeded = false;
+                reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
+                player.setShotsFired(0);
+                player.addTotalAmmo(-12);
+                reloadNeeded = false;
             }
             else if(player.getTotalAmmo() > 0)
             {
@@ -308,7 +304,7 @@ public class Main
                 {
                     reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
                 }
-                player.setTotalAmmo(-(player.getShotsFired()));
+                player.addTotalAmmo(-(player.getShotsFired()));
                 player.setShotsFired(0);
             }
             pressed = true;
@@ -522,7 +518,7 @@ public class Main
             }
             else if(wObjs.get(i).type.equals("Ammo"))
             {
-                if(wObjs.get(i).getLastSpriteUpdate() + 50 < getTime())
+                if(wObjs.get(i).getLastSpriteUpdate() + 80 < getTime())
                 {
                     wObjs.get(i).changeSprite(wObjs.get(i).getSpriteX() + 32, wObjs.get(i).getSpriteY());
                     wObjs.get(i).setLastSpriteUpdate(getTime());
@@ -563,9 +559,9 @@ public class Main
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
                         ((Police)wObjs.get(i)).yPos += 20;
-                        if(rng.nextInt(10) < 4)
+                        if(rng.nextInt(10) < 5)
                         {
-                            wObjs.add(new Loot(wObjs.get(i).xPos, wObjs.get(i).yPos + wObjs.get(i).height, "Ammo"));
+                            wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Ammo"));
                         }
                     }
                     ((Police)wObjs.get(i)).width =  64;
@@ -690,6 +686,18 @@ public class Main
                                     }
                                 }
                             }
+                        }
+                        
+                        if(o1.type.equals("Player") && o2.type.equals("Ammo"))
+                        {
+                            player.addTotalAmmo(rng.nextInt(3) * 12);
+                            o2.setToRemove(true);
+                        }
+                        
+                        if(o2.type.equals("Player") && o1.type.equals("Ammo"))
+                        {
+                            player.addTotalAmmo(rng.nextInt(3) * 12);
+                            o1.setToRemove(true);
                         }
                     }
                 }
