@@ -312,11 +312,6 @@ public class Main
                     player.setShotsFired(0);
                     reloadTime = getTime();
                 }
-<<<<<<< HEAD
-                player.addTotalAmmo(-(player.getShotsFired()));
-                player.setShotsFired(0);
-=======
->>>>>>> ammo ommma
             }
         }
         else
