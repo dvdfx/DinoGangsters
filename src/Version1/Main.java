@@ -160,6 +160,7 @@ public class Main
         
         bkgd = new Object("src/resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
         bar = new Bar(1540, 300);
+        wObjs.add(bar);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -940,6 +941,26 @@ public class Main
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             player.beerCount++;
                             o1.setToRemove(true);
+                        }
+                        
+                        if(o1 == player && o2 == bar)
+                        {
+                            if(player.beerCount > 0)
+                            {
+                                pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            }
+                            time += ((5 + rng.nextInt(10)) * player.beerCount);
+                            player.beerCount = 0;
+                        }
+                        
+                        if(o2 == player && o1 == bar)
+                        {
+                            if(player.beerCount > 0)
+                            {
+                                pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
+                            }
+                            time += ((5 + rng.nextInt(10)) * player.beerCount);
+                            player.beerCount = 0;
                         }
                     }
                 }
