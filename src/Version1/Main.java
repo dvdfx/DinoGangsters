@@ -641,7 +641,7 @@ public class Main
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
                         ((Police)wObjs.get(i)).yPos += 20;
-                        if(rng.nextInt(10) < 4)
+                        if(rng.nextInt(10) < 5)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Ammo"));
                         }
@@ -649,7 +649,7 @@ public class Main
                         {
                            wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Steak"));
                         }
-                        if(rng.nextInt(10) < 4)
+                        if(rng.nextInt(10) < 3)
                         {
                            wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Beer"));
                         }
