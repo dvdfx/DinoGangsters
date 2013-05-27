@@ -347,6 +347,7 @@ public class Main
                   processMouse();
                   retryClicked();
                   render();
+                  gameOverScore();
               }
               else
               {
@@ -757,6 +758,12 @@ public class Main
         font.drawString(280, 5, "Health: "+player.health, Color.green);
         font.drawString(540, 5, "Weapon: Tommy", Color.green);
         font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired())+"/"+player.getTotalAmmo(), Color.green);
+    }
+    
+    public void gameOverScore()
+    {
+        //font.
+        font.drawString(400, 320, "Your Final Score: "+score, Color.white); 
     }
     
     public int getDelta()
