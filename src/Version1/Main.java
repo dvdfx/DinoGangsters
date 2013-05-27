@@ -480,10 +480,8 @@ public class Main
                     if(wObjs.get(i).xPos - player.xPos > 0)    
                     {
                         wObjs.get(i).xPos -= 1;
-                        long check = getTime();
-                        check = check - lastSwitch;
                                               
-                        if(check > 17)
+                        if(wObjs.get(i).getLastSpriteUpdate() + 50 < getTime())
                         {
                             if(wObjs.get(i).getSpriteX() == 0)
                             {
@@ -497,6 +495,7 @@ public class Main
                             {
                                 wObjs.get(i).changeSprite(0, 0);
                             }
+                            wObjs.get(i).setLastSpriteUpdate(getTime());
                         }
                     }
                     else
@@ -514,6 +513,14 @@ public class Main
                     }
                 }
                 lastSwitch = getTime();
+            }
+            else if(wObjs.get(i).type.equals("Ammo"))
+            {
+                if(wObjs.get(i).getLastSpriteUpdate() + 50 < getTime())
+                {
+                    wObjs.get(i).changeSprite(wObjs.get(i).getSpriteX() + 32, wObjs.get(i).getSpriteY());
+                    wObjs.get(i).setLastSpriteUpdate(getTime());
+                }
             }
         }
     }
@@ -550,7 +557,7 @@ public class Main
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
                         ((Police)wObjs.get(i)).yPos += 20;
-                        if(rng.nextInt(10) < 3)
+                        if(rng.nextInt(10) < 4)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos, wObjs.get(i).yPos + wObjs.get(i).height, "Ammo"));
                         }

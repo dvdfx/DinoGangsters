@@ -23,6 +23,7 @@ public class Object
     public float xPos, yPos, width, height, tOffX, tOffY, tOffW, tOffH, texW, texH;
     protected float[] velocity;
     public boolean flip = false;
+    private long lastSpriteUpdate = 0;
     
     public Object(String iLoc, float x, float y, float w, float h, float tx, float ty, float tw, float th)
     {
@@ -139,5 +140,15 @@ public class Object
     public float[] getVelocity()
     {
         return velocity;
+    }
+    
+    public long getLastSpriteUpdate()
+    {
+        return lastSpriteUpdate;
+    }
+    
+    public void setLastSpriteUpdate(long t)
+    {
+        lastSpriteUpdate = t;
     }
 }
