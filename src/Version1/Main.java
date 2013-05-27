@@ -45,7 +45,7 @@ public class Main
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
-    private ArrayList<String> scoreArray = new ArrayList<String>();
+    private String[][] scoreArray = new String[2][10];
     private Player player;
     private Object menuObj;
     private Object bkgd;
@@ -100,6 +100,17 @@ public class Main
         
         getDelta();
         lastFPS = getTime();
+        
+        scoreArray = readFromFile("scores.rraw");
+        if(scoreArray == null)
+        {
+            scoreArray = new String[2][10];
+        }
+        else
+        {
+            System.out.println(scoreArray[0][0]);
+            System.out.println(scoreArray[1][0]);
+        }
         
         menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
@@ -877,42 +888,48 @@ public class Main
     
     public void nameEnter() throws FileNotFoundException
     {
+        int index = 0;
         name = (String)JOptionPane.showInputDialog(null,"What is your name?");
-        scoreArray.add(name);
-        save("scores.txt");
-        writeToFile(scoreArray,"scores2.txt");
-    }
-    
-    public void save(String fileName) throws FileNotFoundException 
-    {
-        BufferedWriter writer = null;
-        try 
+        for(int i =0; i<10; i++)
         {
-            writer = new BufferedWriter(new FileWriter(fileName));   
-            writer.write(name + " " + score);
-        }
-        catch(IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        finally
-        {
-            if (writer != null)
+            if(scoreArray[0][i] == null)
             {
-                try 
-                {
-                   writer.close();
-                } 
-                catch (IOException ignored) 
-                {                
-                }
+                index = i;
+                break;
             }
         }
+        scoreArray[0][index] = name;
+        scoreArray[1][index] = Integer.toString(score);
+        writeToFile(scoreArray,"scores.rraw");
     }
     
-    
-    
-    public void writeToFile(ArrayList<String> data, String fileName)
+    public String[][] readFromFile(String fileName)
+    {
+        String[][] temp = null;
+        try
+        {
+            File file = new File(fileName);
+            java.lang.Object data = null;
+            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            try
+            {
+                while((data = input.readObject()) != null)
+                {
+                   temp = (String[][])data;
+                }
+            }
+            catch(EOFException e)
+            {
+                input.close();
+            }
+        }
+        catch(Exception e)
+        {                    
+        }
+        return temp;
+    }
+      
+    public void writeToFile(String[][] data, String fileName)
     {
         try 
         {
