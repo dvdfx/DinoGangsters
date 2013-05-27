@@ -48,6 +48,8 @@ public class Main
     boolean askOnce = true;
     boolean writeFile = true;
     boolean reloading = false;
+    boolean winScreenShow = false;
+    boolean highScoreShow = false;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -78,6 +80,7 @@ public class Main
     
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
+    private int RELOAD_TIME = 1000;
     
     private Audio menuMusic;
     private Audio fireSound;
@@ -168,7 +171,7 @@ public class Main
         
         goverObj = new Object("src/resource/killScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         winScreen = new Object("src/resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
-        hsScreen = new Object("src/resource/winScreen.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
+        hsScreen = new Object("src/resource/highScores.png", 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1024.0f, 600.0f);
         
         Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
         font = new TrueTypeFont(awtFont, false);
@@ -247,6 +250,22 @@ public class Main
             glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
             glMatrixMode(GL_MODELVIEW);
             goverObj.render();
+        }
+        else if(winScreenShow == true)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
+            winScreen.render();
+        }
+        else if(highScoreShow == true)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
+            hsScreen.render();
         }
         else
         {
@@ -327,6 +346,12 @@ public class Main
             destroy();
             System.exit(0);
         }
+        
+        if(Keyboard.isKeyDown(Keyboard.KEY_H))
+        {
+            highScoreShow = true;
+        }
+        
         if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
         {
             inGameMusic.stop();
@@ -476,7 +501,7 @@ public class Main
         }
         else
         {
-            if(getTime() > rPress + 1500)
+            if(getTime() > rPress + RELOAD_TIME)
             {
                 reloading = false;
             }
@@ -504,6 +529,20 @@ public class Main
                   startClicked();
                   render();
                   SoundStore.get().poll(0);
+              }
+              else if(highScoreShow == true)
+              {
+                  gameOver = false;
+                  processMouse();
+                  gameOverKeyboard();
+                  render();
+              }
+              else if(winScreenShow == true)
+              {
+                  gameOver = false;
+                  processMouse();
+                  gameOverKeyboard();
+                  render();
               }
               else if(gameOver == true)
               {
@@ -1045,7 +1084,7 @@ public class Main
         else
         {
             int temp = 1000;
-            int index2 = 11;
+            int index2 = 10;
             for(int j=0; j<10; j++)
             {
                 if((score > Integer.parseInt(scoreArray[1][j])) && (Integer.parseInt(scoreArray[1][j]) < temp))
