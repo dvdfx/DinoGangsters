@@ -3,11 +3,12 @@ package Version1;
 import java.util.*;
 import java.util.Random;
 import java.awt.Font;
+import java.awt.event.*;
 import java.io.IOException;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.Timer;
 import javax.swing.JOptionPane;
 import java.awt.Dialog.*;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -56,8 +57,11 @@ public class Main
     private long lastPressed = 0;
     private long lastSwitch = 0;
     private long reloadTime = 0;
+    private long startTime = 0;
     
     private Random rng = new Random();
+    Timer timer;
+    private int time = 60;
     
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 600;
@@ -101,6 +105,16 @@ public class Main
         getDelta();
         lastFPS = getTime();
         
+        ActionListener taskPerformer = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+              time -= 1;
+            }
+        };
+        timer = new Timer(1000, taskPerformer);
+        timer.setInitialDelay(0);
+        
         scoreArray = readFromFile("scores.rraw");
         if(scoreArray == null)
         {
@@ -117,6 +131,8 @@ public class Main
                 }
             }
         }
+        
+        startTime = (int)getTime()/1000;
         
         menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
@@ -266,6 +282,7 @@ public class Main
             reloadNeeded = false;
             wObjs.clear();
             score =0;
+            time = 150;
             player = new Player(10, 10);
             wObjs.add(player);
             run();
@@ -447,6 +464,7 @@ public class Main
           Display.update();
           Display.sync(60);
       }
+      timer.stop();
       Display.destroy();
       AL.destroy();
     }
@@ -483,6 +501,7 @@ public class Main
             playDeath();
             poShootYou();
             playerHealthCheck();
+            checkTimer();
         }
     }
     
@@ -496,11 +515,22 @@ public class Main
         }
     }
     
+    public void checkTimer()
+    {
+        if(time < 0)
+        {
+            inGameMusic.stop();
+            gameOverSound.playAsSoundEffect(1.0f, 1.0f, false);
+            displayKillScreen();
+        }
+    }
+    
     public void startClicked()
     {
         if((Mouse.isButtonDown(0))&&(clickedXPos > 270)&&(clickedXPos < 765)&&(clickedYPos < 225)&&(clickedYPos > 150))
         {
             menu = false;
+            timer.start();
         }
         else if(Mouse.isButtonDown(0))
         {
@@ -521,6 +551,7 @@ public class Main
             reloadNeeded = false;
             wObjs.clear();
             score =0;
+            time =150;
             player = new Player(10, 10);
             wObjs.add(player);
             run();
@@ -883,12 +914,14 @@ public class Main
     {
         font.drawString(20, 5, "Score: "+score, Color.green);
         font.drawString(280, 5, "Health: "+player.health, Color.green);
-        font.drawString(540, 5, "Weapon: Tommy", Color.green);
+        font.drawString(540, 5, "Time: "+time, Color.green);
         font.drawString(800, 5, "Ammo: "+(player.shotLimit - player.getShotsFired())+"/"+player.getTotalAmmo(), Color.green);
     }
     
+    
     public void gameOverScore()
     {
+        timer.stop();
         font.drawString(400, 320, "Your Final Score: "+score, Color.white); 
     }
     
