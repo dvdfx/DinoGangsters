@@ -32,6 +32,7 @@ public class Main
     boolean menu = true;
     boolean gameOver = false;
     boolean reloadNeeded = false;
+    boolean pressed = false;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -296,6 +297,20 @@ public class Main
                 player.setTotalAmmo(-12);
                 reloadNeeded = false;
             }
+            else if(player.getTotalAmmo() > 0)
+            {
+                if(pressed == false)
+                {
+                    reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
+                }
+                player.setTotalAmmo(-(player.getShotsFired()));
+                player.setShotsFired(0);
+            }
+            pressed = true;
+        }
+        else
+        {
+            pressed = false;
         }
     }
     
@@ -354,8 +369,15 @@ public class Main
         {
             fireSound.playAsSoundEffect(1.0f, 1.0f, false);
             wObjs.add(new Bullet(player.xPos +60 , player.yPos +50, true, "Player"));
-            player.incBurstShots(1);
-            player.incShotsFired(1);
+            if(player.getShotsFired() < 12)
+            {
+              player.incBurstShots(1);
+              player.incShotsFired(1);
+            }
+            else
+            {
+                player.setShooting(false);
+            }
             player.setLastFired(getTime());
         }
         if(player.getShotsFired() == player.shotLimit)
@@ -506,13 +528,13 @@ public class Main
         {
             player.xPos = 960;
         }
-        if(player.yPos > 480)
+        if(player.yPos > 500)
         {
-            player.yPos = 480;
+            player.yPos = 500;
         }
-        if(player.yPos < 350)
+        if(player.yPos < 400)
         {
-            player.yPos = 350;
+            player.yPos = 400;
         }
     }
     
