@@ -20,6 +20,7 @@ public class Police extends Object
     float yClip = 24;
     float yOff = 12;
     float yOffTex = 12;
+    long shotRate =0;
     
     public Police(float x, float y)
     {
