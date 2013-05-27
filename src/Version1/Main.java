@@ -4,6 +4,14 @@ import java.util.*;
 import java.util.Random;
 import java.awt.Font;
 import java.io.IOException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.awt.Dialog.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.*;
 import org.lwjgl.LWJGLException;
@@ -33,9 +41,11 @@ public class Main
     boolean gameOver = false;
     boolean reloadNeeded = false;
     boolean pressed = false;
+    boolean askOnce = true;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
+    private ArrayList<String> scoreArray = new ArrayList<String>();
     private Player player;
     private Object menuObj;
     private Object bkgd;
@@ -64,6 +74,9 @@ public class Main
     private long lastFrame;
     private int fps;
     private long lastFPS;
+    
+    //JFrame frame = new JFrame();
+    String name;
     
     public static void main(String[] args)
     {
@@ -392,6 +405,11 @@ public class Main
                   retryClicked();
                   render();
                   gameOverScore();
+                  if(askOnce)
+                  {
+                      nameEnter();
+                      askOnce = false;
+                  }
               }
               else
               {
@@ -806,9 +824,68 @@ public class Main
     
     public void gameOverScore()
     {
-        //font.
         font.drawString(400, 320, "Your Final Score: "+score, Color.white); 
     }
+    
+    public void nameEnter() throws FileNotFoundException
+    {
+        name = (String)JOptionPane.showInputDialog(null,"What is your name?");
+        scoreArray.add(name);
+        save("scores.txt");
+        writeToFile(scoreArray,"scores2.txt");
+    }
+    
+    public void save(String fileName) throws FileNotFoundException 
+    {
+        BufferedWriter writer = null;
+        try 
+        {
+            writer = new BufferedWriter(new FileWriter(fileName));   
+            writer.write(name + " " + score);
+        }
+        catch(IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            if (writer != null)
+            {
+                try 
+                {
+                   writer.close();
+                } 
+                catch (IOException ignored) 
+                {                
+                }
+            }
+        }
+    }
+    
+    public void writeToFile(ArrayList<String> data, String fileName)
+    {
+        try 
+        {
+          ObjectOutputStream output = null;
+          try 
+          {
+             output = new ObjectOutputStream (new BufferedOutputStream(new FileOutputStream(fileName)));
+             output.writeObject(data);
+          }
+          finally 
+          {
+             output.close();
+          }
+       }
+       catch(FileNotFoundException e)
+       {
+       }
+       catch(IOException e)
+       {
+       }
+    }
+    
+    
     
     public int getDelta()
     {
