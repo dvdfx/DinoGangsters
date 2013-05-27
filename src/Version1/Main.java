@@ -26,9 +26,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.util.ResourceLoader;
 import org.lwjgl.openal.AL;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.openal.SoundStore;
@@ -47,6 +47,7 @@ public class Main
     boolean pressed = false;
     boolean askOnce = true;
     boolean writeFile = true;
+    boolean reloading = false;
     int score =0;
     TrueTypeFont font;
     private ArrayList<Object> wObjs = new ArrayList<Object>();
@@ -66,6 +67,7 @@ public class Main
     private long lastSwitch = 0;
     private long reloadTime = 0;
     private long startTime = 0;
+    private long rPress =0;
     
     private Random rng = new Random();
     Timer timer;
@@ -273,6 +275,11 @@ public class Main
                 }
                 wObjs.get(i).render();
             }
+            if(reloading)
+            {
+                font.drawString(player.xPos, player.yPos -20, "Reloading", Color.red);
+            }
+            
             GUIObj.xPos = camX;
             GUIObj.render();
             displayScore(camX);        
@@ -403,16 +410,19 @@ public class Main
         
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
-            if(player.getBurstShots() < player.getBurstRate())
+            if(!reloading)
             {
-                if(reloadNeeded == false)
+                if(player.getBurstShots() < player.getBurstRate())
                 {
-                     ((Player)player).setShooting(true);
+                    if(reloadNeeded == false)
+                    {
+                        ((Player)player).setShooting(true);
+                    }
                 }
-            }
-            else
-            {
-                ((Player)player).setShooting(false);
+                else
+                {
+                    ((Player)player).setShooting(false);
+                }
             }
         }
         else
@@ -430,6 +440,8 @@ public class Main
                 player.addTotalAmmo(-12);
                 reloadNeeded = false;
                 reloadTime = getTime();
+                reloading = true;
+                rPress = getTime();
             }
             else if(player.getTotalAmmo() > 0)
             {
@@ -439,6 +451,8 @@ public class Main
                    {
                         reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
                         pressed = true;
+                        reloading = true;
+                        rPress = getTime();
                    }
                     player.addTotalAmmo(-(player.getShotsFired()));
                     player.setShotsFired(0);
@@ -448,9 +462,13 @@ public class Main
         }
         else
         {
+            if(getTime() > rPress + 1500)
+            {
+                reloading = false;
+            }
             pressed = false;
         }
-    }
+      }
     
     public void run() throws LWJGLException, IOException            
     {
@@ -572,10 +590,6 @@ public class Main
         {
             menu = false;
             timer.start();
-        }
-        else if(Mouse.isButtonDown(0))
-        {
-           // System.out.println(clickedYPos);
         }
     }
     
