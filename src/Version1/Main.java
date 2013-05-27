@@ -57,6 +57,8 @@ public class Main
     private Object goverObj;
     private Object mapScreen;
     
+    private float camX = 0;
+    
     private Controller controller;
     
     private long lastPressed = 0;
@@ -148,10 +150,10 @@ public class Main
         
         menuObj = new Object("src/resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        player = new Player(10, 10);
+        player = new Player(120, 120);
         wObjs.add(player);
         
-        bkgd = new Object("src/resource/street4.png", 0.0f, 40.0f, 1700, SCREEN_HEIGHT - 40, 488.0f, 0.0f, 841.0f, 300.0f);
+        bkgd = new Object("src/resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -239,7 +241,15 @@ public class Main
         }
         else
         {
-            float camX = player.xPos;
+            if(player.xPos < camX + 120 && camX > 2)
+            {
+                camX = player.xPos - 120;
+            }
+            
+            if(player.xPos > camX + SCREEN_WIDTH - (player.width + 360) && camX + SCREEN_WIDTH < 1778)
+            {
+                camX = player.xPos - SCREEN_WIDTH + (player.width + 360);
+            }
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
             glOrtho(camX, camX + SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
@@ -680,9 +690,9 @@ public class Main
         {
             player.xPos = 5;
         }
-        if(player.xPos > 1030)
+        if(player.xPos > 1780 - player.width)
         {
-            player.xPos = 1030;
+            player.xPos = 1780 - player.width;
         }
         if(player.yPos > 500)
         {
@@ -912,7 +922,7 @@ public class Main
         while(wObjsIter.hasNext())
         {
             Object obj = (Object) wObjsIter.next();
-            if(obj.getToRemove() || (obj.type.equals("Bullet") && obj.xPos > SCREEN_WIDTH + 20) || (obj.type.equals("Bullet") && obj.xPos < -20))
+            if(obj.getToRemove() || (obj.type.equals("Bullet") && obj.xPos > 1780 + 20) || (obj.type.equals("Bullet") && obj.xPos < -20))
             {
                 wObjsIter.remove();
             }
