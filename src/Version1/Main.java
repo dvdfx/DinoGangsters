@@ -151,7 +151,7 @@ public class Main
         player = new Player(10, 10);
         wObjs.add(player);
         
-        bkgd = new Object("src/resource/street4.png", 0.0f, 0.0f, 1682, SCREEN_HEIGHT, 0.0f, 0.0f, 841.0f, 300.0f);
+        bkgd = new Object("src/resource/street4.png", 0.0f, 40.0f, 1700, SCREEN_HEIGHT - 40, 488.0f, 0.0f, 841.0f, 300.0f);
         
         GUIObj = new Object("src/resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
