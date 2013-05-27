@@ -19,7 +19,7 @@ public class Bullet extends Object
     
     public Bullet(float x, float y, boolean right, String src)
     {
-        super("src/resource/bullet.png", x, y, 8, 8, 0, 0, 4, 4);
+        super("src/resource/bullet.png", x, y, 8, 4, 0, 2, 4, 2);
         type = "Bullet";
         source = src;
         if(right)

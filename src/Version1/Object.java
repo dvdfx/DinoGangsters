@@ -41,7 +41,7 @@ public class Object
         velocity = new float[]{0, 0};
                 
         imgLoc = iLoc;
-        System.out.println(imgLoc);
+        //System.out.println(imgLoc);
         try
         {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imgLoc));

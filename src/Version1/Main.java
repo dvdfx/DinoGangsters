@@ -275,7 +275,7 @@ public class Main
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D))
         {
-            player.setXVel(4);
+            player.setXVel(5);
             long check = getTime();
             check = check - lastPressed;
             
@@ -298,7 +298,7 @@ public class Main
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_A))
         {
-            player.setXVel(-4);
+            player.setXVel(-5);
             long check2 = getTime();
             check2 = check2 - lastPressed;
             
@@ -326,11 +326,11 @@ public class Main
         
         if(Keyboard.isKeyDown(Keyboard.KEY_W))
         {
-            player.setYVel(-3);
+            player.setYVel(-4);
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_S))
         {
-            player.setYVel(3);
+            player.setYVel(4);
         }
         else
         {
@@ -622,9 +622,9 @@ public class Main
         {
             player.yPos = 500;
         }
-        if(player.yPos < 400)
+        if(player.yPos < 360)
         {
-            player.yPos = 400;
+            player.yPos = 360;
         }
     }
     
@@ -691,7 +691,7 @@ public class Main
                 {
                     if((o1.xPos > o2.xPos)&&(o1.xPos < o2.xPos + o2.width)&&(o1.yPos > o2.yPos) &&(o1.yPos < o2.yPos + o2.height))
                     {
-                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1 != player && o2 != player))
+                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (o1.type.equals("Police") ^ o2.type.equals("Police")))
                         {
                             if(o1.type.equals("Police") && ((Bullet)o2).getSource().equals("Player"))
                             {
@@ -736,7 +736,7 @@ public class Main
                             break;
                         }
                         
-                        if((o1.type.equals("Bullet") ^ o2.type.equals("Bullet")) && (!o1.type.equals("Police") && !o2.type.equals("Police")))
+                        if(((o1.type.equals("Bullet") && ((Bullet)o1).getSource().equals("Police")) ^ (o2.type.equals("Bullet") && ((Bullet)o2).getSource().equals("Police"))) && (o1.type.equals("Player") ^ o2.type.equals("Player")))
                         {
                             if(o1 == player)
                             {
