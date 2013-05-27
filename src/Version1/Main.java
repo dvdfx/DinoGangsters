@@ -302,6 +302,7 @@ public class Main
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
         {
+            timer.start();
             menu = false;
         }
     }
