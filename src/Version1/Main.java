@@ -295,14 +295,9 @@ public class Main
             {
                 reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
                 player.setShotsFired(0);
-<<<<<<< HEAD
                 player.addTotalAmmo(-12);
                 reloadNeeded = false;
-=======
-                player.setTotalAmmo(-12);
-                reloadNeeded = false;
                 reloadTime = getTime();
->>>>>>> working ammo spam
             }
             else if(player.getTotalAmmo() > 0)
             {
@@ -313,15 +308,12 @@ public class Main
                         reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
                         pressed = true;
                    }
-                    player.setTotalAmmo(-(player.getShotsFired()));
+                    player.addTotalAmmo(-(player.getShotsFired()));
                     player.setShotsFired(0);
                     reloadTime = getTime();
                 }
-<<<<<<< HEAD
                 player.addTotalAmmo(-(player.getShotsFired()));
                 player.setShotsFired(0);
-=======
->>>>>>> working ammo spam
             }
         }
         else
