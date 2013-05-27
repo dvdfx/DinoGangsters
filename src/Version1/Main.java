@@ -451,7 +451,7 @@ public class Main
         {
             if(wObjs.get(i).type.equals("Police"))
             {
-                if((getTime() > ((Police)wObjs.get(i)).shotRate + 200) && ((Police)wObjs.get(i)).shotLimit < 3)
+                if((getTime() > ((Police)wObjs.get(i)).shotRate + 2000) && ((Police)wObjs.get(i)).shotLimit < 3)
                 {
                     wObjs.add(new Bullet(wObjs.get(i).xPos -15 , wObjs.get(i).yPos +75, false, "Police"));
                     ((Police)wObjs.get(i)).shotLimit++;
