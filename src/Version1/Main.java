@@ -209,6 +209,7 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
+            destroy();
             System.exit(0);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
@@ -221,6 +222,7 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
+            destroy();
             System.exit(0);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
@@ -244,6 +246,7 @@ public class Main
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
+            destroy();
             System.exit(0);
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D))
