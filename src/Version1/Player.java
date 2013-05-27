@@ -22,7 +22,7 @@ public class Player extends Object
     
     public Player(float x, float y)
     {
-        super("resource/rexSprite.png", x, y, 64, 104, 0, 12, 32, 52);
+        super("src/resource/rexSprite.png", x, y, 64, 104, 0, 12, 32, 52);
         type = "Player";
     }
     
