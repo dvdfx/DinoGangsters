@@ -44,7 +44,8 @@ public class Main
     private Object mapScreen;
     
     private long lastPressed = 0;
-    private long lastSwitch =0;
+    private long lastSwitch = 0;
+    private long reloadTime = 0;
     
     private Random rng = new Random();
     
@@ -292,10 +293,14 @@ public class Main
         {
             if(reloadNeeded && player.getTotalAmmo() > 0)
             {
-                reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
-                player.setShotsFired(0);
-                player.setTotalAmmo(-12);
-                reloadNeeded = false;
+                if(getTime() < reloadTime)
+                {
+                    
+                }
+                    reloadSound.playAsSoundEffect(1.0f, 1.0f, false);
+                    player.setShotsFired(0);
+                    player.setTotalAmmo(-12);
+                    reloadNeeded = false;
             }
             else if(player.getTotalAmmo() > 0)
             {
@@ -311,6 +316,7 @@ public class Main
         else
         {
             pressed = false;
+            reloadTime = getTime();
         }
     }
     
