@@ -680,9 +680,9 @@ public class Main
         {
             player.xPos = 5;
         }
-        if(player.xPos > 960)
+        if(player.xPos > 1030)
         {
-            player.xPos = 960;
+            player.xPos = 1030;
         }
         if(player.yPos > 500)
         {
@@ -737,7 +737,7 @@ public class Main
         if(chance == 75)
         {
             int randY = randomGenerator.nextInt(120);
-            wObjs.add(new Police(1000, 350+randY));
+            wObjs.add(new Police(player.xPos+1000, 350+randY));
         }
     }
     
