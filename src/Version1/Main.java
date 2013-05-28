@@ -67,6 +67,7 @@ public class Main
     private float camX = 0;
     
     private Controller controller;
+    private boolean usePad = false;
     
     private long lastPressed = 0;
     private long lastSwitch = 0;
@@ -109,6 +110,7 @@ public class Main
         }
         catch(Exception ex)
         {
+            System.err.println(ex);
         }
     }
     
@@ -130,14 +132,15 @@ public class Main
         timer = new Timer(1000, taskPerformer);
         timer.setInitialDelay(0);
         
-        //for (Controller c : ControllerEnvironment.getDefaultEnvironment().getControllers()) {
-        //    if (c.getType() == Controller.Type.GAMEPAD) {
-        //        controller = c;
-        //        break;
-        //    }
-        //}
+        for (Controller c : ControllerEnvironment.getDefaultEnvironment().getControllers()) {
+            if (c.getType() == Controller.Type.GAMEPAD) {
+                controller = c;
+                usePad = true;
+                break;
+            }
+        }
         
-        //scoreArray = readFromFile("scores.rraw");
+        scoreArray = readFromFile("scores.rraw");
         if(scoreArray == null)
         {
             scoreArray = new String[2][10];
@@ -158,12 +161,12 @@ public class Main
         
         menuObj = new Object("resource/start.png", 0.0f, 0.0f, 1024f, 600f, 0.0f, 0.0f, 1024f, 600f);
         
-        player = new Player(240, 240);
-        wObjs.add(player);
-        
         bkgd = new Object("resource/street5.png", 0.0f, 40.0f, 1780, SCREEN_HEIGHT - 40, 600.0f, 0.0f, 1024.0f, 366.0f);
         bar = new Bar(-4, 96);
         wObjs.add(bar);
+        
+        player = new Player(240, 240);
+        wObjs.add(player);
         
         GUIObj = new Object("resource/headerBar2.png", 0.0f, 0.0f, SCREEN_WIDTH, 40, 0.0f, 0.0f, 512.0f, 20.0f);
         
@@ -326,12 +329,12 @@ public class Main
     
     public void menuKeyboard()
     {
-        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || (usePad && controller.getComponent(Component.Identifier.Button._7).getPollData() > 0.0))
         {
             destroy();
             System.exit(0);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
+        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN) || (usePad && controller.getComponent(Component.Identifier.Button._0).getPollData() > 0.0))
         {
             timer.start();
             menu = false;
@@ -341,7 +344,7 @@ public class Main
     
     public void gameOverKeyboard() throws LWJGLException, IOException
     {
-        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || (usePad && controller.getComponent(Component.Identifier.Button._7).getPollData() > 0.0))
         {
             destroy();
             System.exit(0);
@@ -352,7 +355,7 @@ public class Main
             highScoreShow = true;
         }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN))
+        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN) || (usePad && controller.getComponent(Component.Identifier.Button._0).getPollData() > 0.0))
         {
             inGameMusic.stop();
             Display.destroy();
@@ -364,8 +367,10 @@ public class Main
             wObjs.clear();
             score =0;
             askOnce = true;
-            time = 150;
-            player = new Player(10, 10);
+            time = 60;
+            bar = new Bar(-4, 96);
+            wObjs.add(bar);
+            player = new Player(240, 240);
             wObjs.add(player);
             run();
         }
@@ -373,17 +378,20 @@ public class Main
     
     public void processKeyboard()
     {
-        //if(controller != null)
-        //{
-        //    controller.poll();
-        //}
+        /*if(usePad)
+        {
+            for(Component c : controller.getComponents())
+            {
+                System.out.println(c.getIdentifier() + " ( " + c.getName() + "): " + c.getPollData());
+            }
+        }*/
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || (usePad && controller.getComponent(Component.Identifier.Button._7).getPollData() > 0.0))
         {
             destroy();
             System.exit(0);
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_D))
+        if(Keyboard.isKeyDown(Keyboard.KEY_D) || (usePad && controller.getComponent(Component.Identifier.Axis.X).getPollData() > 0.2))
         {
             player.setXVel(5);
             long check = getTime();
@@ -406,7 +414,7 @@ public class Main
             }
             lastPressed = getTime();
         }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_A))
+        else if(Keyboard.isKeyDown(Keyboard.KEY_A) || (usePad && controller.getComponent(Component.Identifier.Axis.X).getPollData() < -0.2))
         {
             player.setXVel(-5);
             long check2 = getTime();
@@ -434,11 +442,11 @@ public class Main
             player.setXVel(0);
         }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_W))
+        if(Keyboard.isKeyDown(Keyboard.KEY_W) || (usePad && controller.getComponent(Component.Identifier.Axis.Y).getPollData() < -0.2))
         {
             player.setYVel(-4);
         }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_S))
+        else if(Keyboard.isKeyDown(Keyboard.KEY_S) || (usePad && controller.getComponent(Component.Identifier.Axis.Y).getPollData() > 0.2))
         {
             player.setYVel(4);
         }
@@ -447,7 +455,7 @@ public class Main
             player.setYVel(0);
         }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) || (usePad && controller.getComponent(Component.Identifier.Button._0).getPollData() > 0.0))
         {
             if(!reloading)
             {
@@ -470,7 +478,7 @@ public class Main
             player.setBurstShots(0);
         }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_R))
+        if(Keyboard.isKeyDown(Keyboard.KEY_R) || (usePad && controller.getComponent(Component.Identifier.Button._1).getPollData() > 0.0))
         {
             if(reloadNeeded && player.getTotalAmmo() > 0)
             {
@@ -516,6 +524,10 @@ public class Main
       {
           if(Display.isVisible())
           {
+              if(usePad)
+              {
+                  controller.poll();
+              }
               if(menu == true)
               {
                   if(inMenu == false)
@@ -566,6 +578,7 @@ public class Main
                     inMenu = false;
                   }
                   int delta = getDelta();
+                  
                   processKeyboard();
                   processMouse();
                   update(delta);
@@ -661,8 +674,10 @@ public class Main
             wObjs.clear();
             score =0;
             askOnce = true;
-            time =150;
-            player = new Player(10, 10);
+            time =60;
+            bar = new Bar(-4, 96);
+            wObjs.add(bar);
+            player = new Player(240, 240);
             wObjs.add(player);
             run();
         }        
@@ -786,12 +801,13 @@ public class Main
                     if(((Police)wObjs.get(i)).deathTimer == 0)
                     {
                         roarSound.playAsSoundEffect(1.0f, 1.0f, false);
+                        score += 10;
                         ((Police)wObjs.get(i)).yPos += 20;
-                        if(rng.nextInt(10) < 5)
+                        if(rng.nextInt(10) < 3)
                         {
                             wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Ammo"));
                         }
-                        if(rng.nextInt(10) < 4)
+                        if(rng.nextInt(10) < 3)
                         {
                            wObjs.add(new Loot(wObjs.get(i).xPos - 12 + rng.nextInt(32), wObjs.get(i).yPos - 12 + rng.nextInt(32), "Steak"));
                         }
@@ -926,14 +942,14 @@ public class Main
                         if(o1.type.equals("Player") && o2.type.equals("Ammo"))
                         {
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
-                            player.addTotalAmmo(rng.nextInt(3) * 12);
+                            player.addTotalAmmo((1 + rng.nextInt(1)) * 12);
                             o2.setToRemove(true);
                         }
                         
                         if(o2.type.equals("Player") && o1.type.equals("Ammo"))
                         {
                             pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
-                            player.addTotalAmmo(rng.nextInt(3) * 12);
+                            player.addTotalAmmo((1 + rng.nextInt(1)) * 12);
                             o1.setToRemove(true);
                         }
                         
@@ -987,7 +1003,7 @@ public class Main
                             {
                                 pickupSound.playAsSoundEffect(1.0f, 1.0f, false);
                             }
-                            time += ((5 + rng.nextInt(15)) * player.beerCount);
+                            time += ((5 + rng.nextInt(10)) * player.beerCount);
                             player.beerCount = 0;
                         }
                         
@@ -1031,7 +1047,6 @@ public class Main
                     if(((Police)obj).deathTimer > 1000)
                     {
                         obj.setToRemove(true);
-                        score += 10;
                     }
                 }
             }
@@ -1067,6 +1082,7 @@ public class Main
             if(scoreArray[0][i] == null)
             {
                 index = i;
+                writeFile = true;
                 break;
             }
             else
